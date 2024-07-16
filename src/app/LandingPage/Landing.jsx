@@ -116,7 +116,7 @@ const page = () => {
           <div onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <ReceiptLong/> Generate my Bill
           </div>
-          <Link href={`/GenerateBill?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
+          <Link href={`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <CurrencyRupee/> Treat the Team
           </Link>
         </div>
