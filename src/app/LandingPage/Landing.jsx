@@ -15,6 +15,7 @@ import { CurrencyRupee, EditNote, History, ReceiptLong } from "@mui/icons-materi
 import LoadingPage from "../loaders/LoadingPage";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import toast, { Toaster } from "react-hot-toast";
+import NotFound from "../not-found";
 
 
 const page = () => {
@@ -74,6 +75,10 @@ const page = () => {
         }
       }
       }
+      else
+      {
+        setname("notfoundpage")
+      }
     }
     fetchdetails();
   }, [])
@@ -84,7 +89,7 @@ const page = () => {
   return (
     <>
     <Toaster/>
-      <div className="w-screen min-h-screen  relative bg-gradient-to-bl overflow-hidden  from-[#430123] to-[#5A0132]">
+      {name && name!="notfoundpage" &&<div className="w-screen min-h-screen  relative bg-gradient-to-bl overflow-hidden  from-[#430123] to-[#5A0132]">
         <Image
           src={border}
           className="  absolute  top-3 left-3 lg:hidden block   h-[93%] w-[94%] "
@@ -135,8 +140,8 @@ const page = () => {
         onClose={() => setisOpen(false)}
         onConfirm={billgenerationconfirmed}
       />
-      </div>
-      
+      </div>}
+      {name && name=="notfoundpage" &&<div><NotFound/></div>}
     </>
   );
 };
