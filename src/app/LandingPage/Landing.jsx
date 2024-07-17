@@ -112,21 +112,21 @@ const page = () => {
             width={500}
             className="h-60 w-60 mx-auto  centered-axis-x "
           />
-          <h1 className=" tracking-widest absolute text-center -mt-3 poppins-bold uppercase text-white text-2xl ">
+          <h1 className=" tracking-widest absolute text-center -mt-3 poppins-medium uppercase text-white text-2xl ">
             {name}
           </h1>
         </div>
         <div className="flex justify-center  items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-6 mt-2">
-          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-semibold text-center w-48 z-50 border-[#FFF9EA] bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-light text-center w-48 z-50 border-[#FFF9EA] bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
           <History/> Previous Orders
           </button>
-          <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] z-50 bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-light w-48 border-[#FFF9EA] z-50 bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
             <EditNote/> Place an Order
           </button>
-          <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-3 z-50 rounded-full text-[#FFF9EA] py-3">
             <ReceiptLong/> Generate my Bill
           </button>
-          <button disabled={!isterminated} onClick={()=>window.location=`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2  text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>window.location=`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2  text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <CurrencyRupee/> Treat the Team
           </button>
         </div>
