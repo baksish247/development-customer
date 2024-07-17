@@ -1,4 +1,4 @@
-@keyframes bounce {
+@keyframes bounce12345 {
     0% {
         transform: translateY(100%);
         opacity: 0;
@@ -13,13 +13,13 @@
     }
 }
 
-.bounce {
+.bounce12345 {
     display: inline-block;
     opacity: 0;
-    animation: bounce 1s forwards;
+    animation: bounce12345 1s forwards;
 }
 
-.container {
+.container12345 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,6 +29,6 @@
 }
 
 /* Adding a delay to ensure all letters bounce in unison */
-.bounce {
-    animation: bounce 1s forwards;
+.bounce12345 {
+    animation: bounce12345 1s forwards;
 }
