@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import './LandingLoaderText.css'; // Make sure to create and import the CSS file
+import { Poppins } from "next/font/google";
 
+const poppins = Poppins({ subsets: ["latin"], weight: ["600"] });
 const BouncingText = () => {
     useEffect(() => {
         const letters = document.querySelectorAll('.bounce');
@@ -18,9 +20,7 @@ const BouncingText = () => {
             <span className="bounce">a</span>
             <span className="bounce">t</span>
             <span className="bounce">a</span>
-            <span className="bounce">a</span>
             <span className="bounce">m</span>
-            <span className="bounce">!</span>
             <span className="bounce">!</span>
         </div>
     );
