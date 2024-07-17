@@ -7,6 +7,7 @@ import LoadingPage from "../loaders/LoadingPage";
 import Footer from "../Menu/Footer";
 import BillHeader from "./BillHeader";
 import Billcomponent from "./Billcomponents";
+import NotFound from "../not-found";
 function Bill() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -33,95 +34,99 @@ function Bill() {
         return null;
       }
     } catch (e) {
-      return null;
+      return <NotFound />;
     }
   };
 
-
   useEffect(() => {
-    const getalldata=async()=>{
     try {
-      if (typeof window !== "undefined") {
-        const orid = localStorage.getItem("orderId");
-        const orderId = await checkvalidorderid(orid);
-        if (orderId != null) {
-          const getorder = async () => {
-            const res = await axios.post("/api/fetchspecificorder", {
-              orderId: orderId,
-            });
-            setresponsecome(true);
-            //console.log(res.data);
-            if (!res.data.success) {
-              toast.error(
-                "Seems like you haven't yet ordered"
-              );
-                setnoorderfound(true);
-                setTimeout(() => {
-                  router.push(`/?id=${restaurant_id}&table=${table_number}`);
-                }, 10000);              
-            } else {
-                
-                const qrres = await axios.post("/api/getqrcodefortip", {
-                  url: `${process.env.NEXT_PUBLIC_QR_URL}/Tip?id=${restaurant_id}&table=${table_number}`,
+      const getalldata = async () => {
+        try {
+          if (typeof window !== "undefined") {
+            const orid = localStorage.getItem("orderId");
+            const orderId = await checkvalidorderid(orid);
+            if (orderId != null) {
+              const getorder = async () => {
+                const res = await axios.post("/api/fetchspecificorder", {
+                  orderId: orderId,
                 });
-                //
-                //console.log(qrres.data);
-                setqrcode(qrres.data.qrCodeDataURL);
-                setOrderDetails(res.data.data);
+                setresponsecome(true);
+                //console.log(res.data);
+                if (!res.data.success) {
+                  toast.error("Seems like you haven't yet ordered");
+                  setnoorderfound(true);
+                  setTimeout(() => {
+                    router.push(`/?id=${restaurant_id}&table=${table_number}`);
+                  }, 10000);
+                } else {
+                  const qrres = await axios.post("/api/getqrcodefortip", {
+                    url: `${process.env.NEXT_PUBLIC_QR_URL}/Tip?id=${restaurant_id}&table=${table_number}`,
+                  });
+                  //
+                  //console.log(qrres.data);
+                  setqrcode(qrres.data.qrCodeDataURL);
+                  setOrderDetails(res.data.data);
+                }
+              };
+              getorder();
+            } else {
+              setresponsecome(true);
+              toast.error("Seems like you haven't yet ordered");
+              setnoorderfound(true);
+              setTimeout(() => {
+                router.push(`/?id=${restaurant_id}&table=${table_number}`);
+              }, 10000);
             }
-          };
-          getorder();
-        } else {
-          setresponsecome(true);
+          } else {
+            setresponsecome(true);
+            toast.error(
+              "Failed to generate your bill. Please ask in-person to the waiter"
+            );
+            setnoorderfound(true);
+            setTimeout(() => {
+              router.push(`/?id=${restaurant_id}&table=${table_number}`);
+            }, 10000);
+          }
+        } catch (error) {
+          //console.error("Failed to generate your bill", error);
           toast.error(
-            "Seems like you haven't yet ordered"
+            "Failed to generate your bill. Please ask in-person to the waiter"
           );
+          setresponsecome(true);
           setnoorderfound(true);
-                setTimeout(() => {
-                  router.push(`/?id=${restaurant_id}&table=${table_number}`);
-                }, 10000); 
-          
+          setTimeout(() => {
+            router.push(`/?id=${restaurant_id}&table=${table_number}`);
+          }, 10000);
         }
-      } else {
-        setresponsecome(true);
-        toast.error(
-          "Failed to generate your bill. Please ask in-person to the waiter"
-        );
-        setnoorderfound(true);
-                setTimeout(() => {
-                  router.push(`/?id=${restaurant_id}&table=${table_number}`);
-                }, 10000); 
-      }
-    } catch (error) {
-      //console.error("Failed to generate your bill", error);
-      toast.error(
-        "Failed to generate your bill. Please ask in-person to the waiter"
-      );
-      setresponsecome(true);
-      setnoorderfound(true);
-                setTimeout(() => {
-                  router.push(`/?id=${restaurant_id}&table=${table_number}`);
-                }, 10000); 
+      };
+      getalldata();
+    } catch (e) {
+      return <NotFound />;
     }
-  }
-  getalldata();
   }, []);
   useEffect(() => {
-    if (noorderfound) {
-      const interval = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
+    try {
+      if (noorderfound) {
+        const interval = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
 
-      return () => clearInterval(interval);
+        return () => clearInterval(interval);
+      }
+    } catch (e) {
+      return <NotFound />;
     }
   }, [noorderfound]);
 
   useEffect(() => {
-    if (countdown === 0) {
-      router.push(`/?id=${restaurant_id}&table=${table_number}`);
+    try {
+      if (countdown === 0) {
+        router.push(`/?id=${restaurant_id}&table=${table_number}`);
+      }
+    } catch (e) {
+      return <NotFound />;
     }
   }, [countdown, restaurant_id, table_number, router]);
-  
 
   if (!responsecome) {
     return (
@@ -133,7 +138,11 @@ function Bill() {
 
   return (
     <>
-      <BillHeader name={restaurant_name} id={restaurant_id} table={table_number}/>
+      <BillHeader
+        name={restaurant_name}
+        id={restaurant_id}
+        table={table_number}
+      />
       <div className="flex flex-col justify-center items-center bg-[#FFF9EA] px-4 mb-20 mt-6">
         <Toaster />
 
@@ -146,28 +155,32 @@ function Bill() {
         </div>
 
         <p className="text-sm text-[#4E0433] mb-6">Happy you! Happy us!</p>
-        {orderDetails &&<Billcomponent name={restaurant_name} order={orderDetails} qrcode={qrcode}/>}
+        {orderDetails && (
+          <Billcomponent
+            name={restaurant_name}
+            order={orderDetails}
+            qrcode={qrcode}
+          />
+        )}
         {!orderDetails && noorderfound && (
-        <div className="flex flex-col items-center justify-center mt-32 mb-32">
-          <div className="text-center mx-8">
-            <h1 className="text-4xl font-bold text-[#441029]">
-              Welcome!
-            </h1>
-            <p className="text-lg mt-4 text-gray-700">
-              Seems like this is your first time here.
-            </p>
-            <p className="text-lg text-gray-700">
-              Order and enjoy your first meal!
-            </p>
-            <div className="mt-10">
-              <p className="text-lg text-[#441029] font-semibold">
-                Redirecting you to home page in{" "}
-                <span className="font-bold">{countdown}</span> seconds...
+          <div className="flex flex-col items-center justify-center mt-32 mb-32">
+            <div className="text-center mx-8">
+              <h1 className="text-4xl font-bold text-[#441029]">Welcome!</h1>
+              <p className="text-lg mt-4 text-gray-700">
+                Seems like this is your first time here.
               </p>
+              <p className="text-lg text-gray-700">
+                Order and enjoy your first meal!
+              </p>
+              <div className="mt-10">
+                <p className="text-lg text-[#441029] font-semibold">
+                  Redirecting you to home page in{" "}
+                  <span className="font-bold">{countdown}</span> seconds...
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
         <button
           // onClick={() =>
           //   router.push(`/Menu?id=${restaurant_id}&table=${table_number}`)

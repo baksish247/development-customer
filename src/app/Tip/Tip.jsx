@@ -9,6 +9,7 @@ import axios from "axios";
 import PaymentLoader from "./PaymentLoader";
 import LoadingPage from "../loaders/LoadingPage";
 import { KeyboardBackspace } from "@mui/icons-material";
+import NotFound from "../not-found";
 
 function Tip() {
   const [tipamount, settipamount] = useState("50");
@@ -26,6 +27,7 @@ function Tip() {
   const [reviewlink, setreviewlink] = useState("");
 
   useEffect(() => {
+    try{
     const fetchwaiters = async () => {
       const restaurantdata=await axios.post(`api/fetchrestaurantmenu`,{restaurant_id})
       setrestaurant_name(restaurantdata.data.data.restaurant_name);
@@ -40,6 +42,10 @@ function Tip() {
       }
     };
     fetchwaiters();
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, []);
 
   const addandremovewaiter = (waiter_id) => {
@@ -52,6 +58,7 @@ function Tip() {
   };
 
   const handlePayment = async () => {
+    try{
     const res = await axios.post("/api/tipcreateorder", {
       amount: parseInt(tipamount) * 100,
       reciept: "abcd",
@@ -122,6 +129,10 @@ function Tip() {
         );
       }
     }
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   };
 
   if (!waiterdata || (waiterdata.length == 0 && !waiternotfound)) {

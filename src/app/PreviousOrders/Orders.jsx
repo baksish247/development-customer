@@ -9,6 +9,7 @@ import LoadingPage from "../loaders/LoadingPage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import NotFound from "../not-found";
 
 function Orders() {
   const router = useRouter();
@@ -22,6 +23,7 @@ function Orders() {
   const [countdown, setCountdown] = useState(10); // Countdown state
   
   useEffect(() => {
+    try{
     if (typeof window !== "undefined") {
       var customer_id = localStorage.getItem("customerId");
     }
@@ -44,6 +46,9 @@ function Orders() {
       }
     };
     fetchallorders();
+    }catch(e){
+      return(<NotFound/>)
+    }
   }, []);
 
   useEffect(() => {

@@ -13,6 +13,7 @@ function Orderviewer({id,table}) {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    try{
     if(typeof window !== 'undefined'){
     const items = JSON.parse(localStorage.getItem('cartItems')) || [];
     const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
@@ -24,6 +25,10 @@ function Orderviewer({id,table}) {
     }
     setIsHydrated(true);
    } // Mark as hydrated after initial load
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, [dispatch]);
 
   if (!isHydrated || cart.totalQuantity === 0) {

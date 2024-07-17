@@ -9,6 +9,7 @@ import LoadingPage from "../loaders/LoadingPage";
 import Footer from "../Menu/Footer";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import OrderHeader from "./OrderHeader";
+import NotFound from "../not-found";
 
 function Order() {
   const searchParams = useSearchParams();
@@ -48,12 +49,13 @@ function Order() {
       } else {
         return null;
       }
-    } catch (e) {
-      return null;
+    }catch(e){
+      return(<NotFound/>)
     }
   };
   
   useEffect(() => {
+    try{
     const getalldata = async () => {
       try {
         if (typeof window !== "undefined") {
@@ -101,9 +103,14 @@ function Order() {
       }
     };
     getalldata();
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, []);
 
   useEffect(() => {
+    try{
     if (noorderfound) {
       const interval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
@@ -111,11 +118,20 @@ function Order() {
 
       return () => clearInterval(interval);
     }
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, [noorderfound]);
 
   useEffect(() => {
+    try{
     if (countdown === 0) {
       router.push(`/Menu?id=${restaurant_id}&table=${table_number}`);
+    }
+  }
+    catch(e){
+      return(<NotFound/>)
     }
   }, [countdown, restaurant_id, table_number, router]);
 

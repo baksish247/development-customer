@@ -11,7 +11,7 @@ function Footer() {
         <p className="mb-4">powered by</p>
         <div className='bg-[#FFF9EA] -mt-[10px] w-fit mx-auto rounded px-4 '>
         <img
-          src="https://www.baksish.in/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbaksish_logo.b18dc14f.png&w=96&q=75" // Replace with actual logo URL
+          src="https://tipppz.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbaksish_logo.b18dc14f.png&w=96&q=75" // Replace with actual logo URL
           alt="BakSish"
           className="mx-auto w-32 h-10 mb-10"
         /></div>

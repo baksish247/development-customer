@@ -8,6 +8,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["600"] }); // Regular, Semi-Bold, Bold
 
 function Header({name,restaurant_id,table_number}) {
 
@@ -15,6 +18,7 @@ function Header({name,restaurant_id,table_number}) {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
+    try{
     const handleScroll = () => {
       if (window.scrollY > 50) {
         // Adjust this value as needed
@@ -28,6 +32,10 @@ function Header({name,restaurant_id,table_number}) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, []);
 
   return (
@@ -39,11 +47,11 @@ function Header({name,restaurant_id,table_number}) {
       />
       <div className="flex justify-between items-center p-6">
         {/* <img
-          src="https://www.baksish.in/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbaksish_logo.b18dc14f.png&w=96&q=75" // Replace with actual logo URL
+          src="https://tipppz.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbaksish_logo.b18dc14f.png&w=96&q=75" // Replace with actual logo URL
           alt="BakSish"
           className="mb-4"
         /> */}
-        <span className="text-2xl border-b-2 border-b-[#4E0433]">{name}</span>
+        <span className={`${poppins.className} text-2xl border-b-2 border-b-[#4E0433]`}>{name}</span>
         <Link href={`/MyOrder?id=${restaurant_id}&table=${table_number}&name=${name}`} className="rounded-full border shadow-inner   border-[#6C0345] text-sm py-1 px-2">My Order</Link>
       </div>
      

@@ -10,6 +10,7 @@ import DisplayCategorywisemenu from "./DisplayCategorywisemenu";
 import Orderviewer from "./Orderviewer";
 import Footer from "./Footer";
 import LoadingPage from "../loaders/LoadingPage";
+import NotFound from "../not-found";
 
 function FetchAllData() {
   const [menuitems, setmenuitems] = useState();
@@ -18,6 +19,7 @@ function FetchAllData() {
   const [orderId, setorderId] = useState("");
 
   useEffect(() => {
+    try{
     const restaurant_id = searchParams.get("id");
     settable_number(searchParams.get("table"));
     const getmenu = async () => {
@@ -28,6 +30,10 @@ function FetchAllData() {
       setmenuitems(res.data.data);
     };
     getmenu();
+  }
+  catch(e){
+    return(<NotFound/>)
+  }
   }, []);
   if (!menuitems)
     return (
@@ -41,16 +47,16 @@ function FetchAllData() {
       
       {menuitems&&<div className="min-h-screen">
         <Header
-          name={menuitems.restaurant_name}
-          restaurant_id={menuitems.restaurant_id}
+          name={menuitems?.restaurant_name}
+          restaurant_id={menuitems?.restaurant_id}
           table_number={table_number}
         />
         {/* <What_your_mood /> */}
-        <SomethingNew menu={menuitems.food_items}/>
+        <SomethingNew menu={menuitems?.food_items}/>
         {/* <BestSeller /> */}
-        <DisplayCategorywisemenu menu={menuitems.food_items} />
+        <DisplayCategorywisemenu menu={menuitems?.food_items} />
         <Orderviewer
-          id={menuitems.restaurant_id}
+          id={menuitems?.restaurant_id}
           table={table_number}
         />
         

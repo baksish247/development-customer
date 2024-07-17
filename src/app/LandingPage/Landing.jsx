@@ -5,7 +5,6 @@ import group from "../assets/Group.svg";
 import chefHat from "../assets/Chef Hat Icon.svg";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import Footer from "./Footer";
 import border from "../assets/Group_32.png";
 import chef from "../assets/iconfood.png";
 import heading from "../assets/heading.png";
@@ -16,6 +15,9 @@ import LoadingPage from "../loaders/LoadingPage";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import toast, { Toaster } from "react-hot-toast";
 import NotFound from "../not-found";
+import { clearCart } from "../redux/CartSlice";
+import { useDispatch } from "react-redux";
+import LandingLoader from "./LandingLoader";
 
 
 const page = () => {
@@ -26,11 +28,9 @@ const page = () => {
   const [isOpen, setisOpen] = useState(false);
   const [orderID, setorderID] = useState("")
   const router=useRouter();
-  // const billgenerationconfirmed=()=>{
-  //   router.push(
-  //     `/GenerateBill?id=${restaurant_id}&table=${table_number}&name=${restaurant_name}`
-  //   )
-  // }
+  const [isterminated, setisterminated] = useState(false)
+  const dispatch = useDispatch();
+
 
   const billgenerationconfirmed=async()=>{
     console.log(orderID)
@@ -53,11 +53,13 @@ const page = () => {
 
   
   useEffect(() => {
+    
     const fetchdetails=async()=>{
       const res=await axios.post('/api/fetchrestaurantmenu',{restaurant_id:id})
       //console.log(res.data.data)
       if(res.data.success)
       {
+        dispatch(clearCart());
         setname(res.data.data.restaurant_name)
         const order_id=localStorage.getItem('orderId');
         //console.log(order_id);
@@ -79,13 +81,16 @@ const page = () => {
       {
         setname("notfoundpage")
       }
+      setisterminated(true);
     }
     fetchdetails();
   }, [])
   
-  if(!name){
-    return <div><LoadingPage/></div>
+  if(!name || !isterminated){
+    return <div><LandingLoader/></div>
   }
+
+
   return (
     <>
     <Toaster/>
@@ -112,18 +117,18 @@ const page = () => {
           </h1>
         </div>
         <div className="flex justify-center  items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-6 mt-2">
-          <Link href={`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-semibold text-center w-48 z-50 border-[#FFF9EA] bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-semibold text-center w-48 z-50 border-[#FFF9EA] bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
           <History/> Previous Orders
-          </Link>
-          <Link href={`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] z-50 bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
+          </button>
+          <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] z-50 bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
             <EditNote/> Place an Order
-          </Link>
-          <div onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
+          </button>
+          <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <ReceiptLong/> Generate my Bill
-          </div>
-          <Link href={`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
+          </button>
+          <button disabled={!isterminated} onClick={()=>window.location=`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2  text-center poppins-semibold w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <CurrencyRupee/> Treat the Team
-          </Link>
+          </button>
         </div>
         <Image
           className="absolute z-10  bottom-6 w-[80%]  -right-2 lg:hidden block "

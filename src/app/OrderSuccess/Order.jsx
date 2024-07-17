@@ -86,9 +86,9 @@ function SuccessPage() {
           </h2>
           <hr className="bg-black my-3"/>
           <ul className="list-disc list-inside">
-            {orderDetails[0]?.order_items.map((item, i) => (
+            {orderDetails[0]?.order_items?.map((item, i) => (
               <div key={i}>
-                {item.items.map((item1, j) => (
+                {item?.items?.map((item1, j) => (
                   <li key={j} className="text-gray-700 flex justify-between border-b border-dotted border-gray-400 py-2">
                     <span>{item1?.food?.name} &nbsp;&nbsp;x{item1?.quantity}</span><span> ₹ {parseFloat(item1?.food?.price)*parseFloat(item1?.quantity)} </span>
                   </li>
@@ -98,7 +98,7 @@ function SuccessPage() {
           </ul>
         </div>
 
-        <div className="flex justify-between mb-2 mt-6">
+        <div className="flex justify-between mb-2 mt-2">
           <span className="font-semibold text-gray-700">Sub Total</span>
           <span className="text-gray-700">
             ₹ {orderDetails[0]?.initial_bill}
