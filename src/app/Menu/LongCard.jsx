@@ -35,9 +35,9 @@ function LongCard({ item }) {
   return (
     <div className="flex items-center space-x-12 p-2 bg-transparent space-y-2">
       <div className="flex-grow w-2/5">
-        <h2 className="text-lg font-semibold text-[#2f2f2f]">{item?.name}</h2>
-        <p>₹ {item?.price}{cartItem?.quantity && <span> X {cartItem?.quantity} </span>}</p>
-        <p className="text-[9px] text-start text-[#565556]">{item.description}</p>
+        <h2 className="text-lg poppins-semibold text-[#2f2f2f]">{item?.name}</h2>
+        <p>₹ {item?.price}</p>
+        <p className="text-[10px] poppins-light text-start text-[#565556]">{item.description}</p>
       </div>
       <div className="w-2/5 flex justify-end relative">
         <img className="h-24 w-40 -z-10 object-cover object-center shadow-md" src={item?.image} alt="item" />

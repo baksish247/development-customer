@@ -13,7 +13,7 @@ function SmallViewItem({ item }) {
           className=" object-cover h-36 rounded-lg w-full"
           alt="itembanner"
         />
-        <p className="text-left ml-6 text-[0.75rem] lg:text-sm mt-2">{(item?.name).slice(0,18)}</p>
+        <p className="text-left poppins-regular ml-6 text-[0.75rem] lg:text-sm mt-2">{(item?.name).slice(0,18)}</p>
       </div>
     </div>
   );

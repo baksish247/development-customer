@@ -243,7 +243,7 @@ function ConfirmOrder() {
       <header>
         <div className="h-16 bg-[#441029] flex justify-between px-4 items-center">
           <div>
-            <h1 className="text-xl font-semibold text-[#fff9ea]">Cart</h1>
+            <h1 className="text-xl poppins-semibold text-[#fff9ea]">Cart</h1>
             <p className="text-white text-sm">
               You pay: ₹{" "}
               {(
@@ -258,7 +258,7 @@ function ConfirmOrder() {
           </div>
           <Link
             href={`/Menu?id=${restaurant_id}&table=${table_number}`}
-            className="px-4 font-bold py-2 tracking-widest bg-white border-2 rounded-md text-[#6C0345] border-[#6C0345]"
+            className="px-4 poppins-bold py-2 tracking-widest bg-white border-2 rounded-md text-[#6C0345] border-[#6C0345]"
           >
             EDIT
           </Link>
@@ -269,8 +269,8 @@ function ConfirmOrder() {
           <ConfirmCard key={i} item={item} cart={cart} />
         ))}
         <section className=" mt-10 mx-4">
-          <h2 className="pl-1 text-sm italic font-light">
-            Add notes for the Chef (if you want any) :
+          <h2 className="pl-1 text-sm  poppins-light">
+            Add notes for the Chef:
           </h2>
           <div className="h-fit min-h-10  bg-white">
             <textarea
@@ -279,20 +279,20 @@ function ConfirmOrder() {
               value={notes}
               onChange={(e) => setnotes(e.target.value)}
               className="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border-2 border-[#441029] "
-              placeholder="Write your thoughts here..."
+              placeholder="Write your instructions..."
             ></textarea>
           </div>
         </section>
         <section className="px-4 mt-10">
           <div className="mx-auto bg-white shadow-lg rounded-lg p-4">
             <div className="flex justify-between mb-2">
-              <span className="font-semibold text-gray-700">Sub Total</span>
+              <span className="poppins-semibold text-gray-700">Sub Total</span>
               <span className="text-gray-700">
                 ₹ {cart?.totalPrice?.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between mb-2">
-              <span className="font-semibold text-gray-700">
+              <span className="poppins-semibold text-gray-700">
                 Taxes{" "}
                 <sup className="rounded-full text-[#6C0345] ">
                   <InfoOutlinedIcon className="h-[1px] w-[1px]" />
@@ -304,8 +304,8 @@ function ConfirmOrder() {
             </div>
             <div className="border-t border-gray-300 my-2"></div>
             <div className="flex justify-between mt-2">
-              <span className="font-bold text-gray-700">Grand Total</span>
-              <span className="font-bold text-gray-700">
+              <span className="poppins-bold text-lg text-gray-700">Grand Total</span>
+              <span className="poppins-bold text-gray-700">
                 ₹{" "}
                 {(
                   parseFloat(cart?.totalPrice) +

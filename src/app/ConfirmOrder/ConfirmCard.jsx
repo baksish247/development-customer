@@ -27,8 +27,8 @@ function ConfirmCard({ item }) {
     <div className="p-4 ">
       <div className="p-2 shadow-md rounded-2xl flex justify-between items-center ">
         <div className="px-1 w-64">
-          <h3 className="text-lg font-bold">{item?.name}</h3>
-          <p className="text-[0.7rem]">
+          <h3 className="text-lg poppins-semibold">{item?.name}</h3>
+          <p className="text-[0.7rem] poppins-light">
             {item?.description ??
               "A Crispy And Flavor-Packed Starter With Succulent Paneer Chunks Dipped In A Seasoned Batter And Fried To Golden Crispiness."}
           </p>

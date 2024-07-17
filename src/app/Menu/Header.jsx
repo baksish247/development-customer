@@ -49,7 +49,7 @@ function Header({name,restaurant_id,table_number}) {
           alt="BakSish"
           className="mb-4"
         /> */}
-        <span className=" text-2xl border-b-2 border-b-[#4E0433]">{name}</span>
+        <span className=" text-2xl border-b-2 poppins-medium border-b-[#4E0433]">{name}</span>
         <Link href={`/MyOrder?id=${restaurant_id}&table=${table_number}&name=${name}`} className="rounded-full border shadow-inner   border-[#6C0345] text-sm py-1 px-2">My Order</Link>
       </div>
      
@@ -70,7 +70,7 @@ function Header({name,restaurant_id,table_number}) {
           alt="bggolds"
           className="object-cover absolute focus:border-none left-0 top-0 -z-10 h-full w-screen object-center"
         />
-        <p className="text-center font-semibold p-1 text-[#6C0345]">
+        <p className="text-center poppins-semibold p-1 text-[#6C0345]">
           Now you can review and rate our service !!
         </p>
       </div>
