@@ -8,9 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["600"] }); // Regular, Semi-Bold, Bold
 
 function Header({name,restaurant_id,table_number}) {
 
@@ -51,7 +49,7 @@ function Header({name,restaurant_id,table_number}) {
           alt="BakSish"
           className="mb-4"
         /> */}
-        <span className={`${poppins.className} text-2xl border-b-2 border-b-[#4E0433]`}>{name}</span>
+        <span className=" text-2xl border-b-2 border-b-[#4E0433]">{name}</span>
         <Link href={`/MyOrder?id=${restaurant_id}&table=${table_number}&name=${name}`} className="rounded-full border shadow-inner   border-[#6C0345] text-sm py-1 px-2">My Order</Link>
       </div>
      

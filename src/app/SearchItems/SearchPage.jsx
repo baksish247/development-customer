@@ -8,10 +8,8 @@ import Orderviewer from "../Menu/Orderviewer";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import LoadingPage from "../loaders/LoadingPage";
-import { Poppins } from "next/font/google";
 import NotFound from "../not-found";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["600"] }); // Semi-Bold weight for the Poppins font
 
 function SearchPage() {
   const [foodItems, setFoodItems] = useState([]);
@@ -88,7 +86,7 @@ function SearchPage() {
           className="absolute top-0 left-0 object-cover"
         />
         <div className="flex justify-between items-center p-6">
-          <span className={`${poppins.className} text-2xl border-b-2 border-b-[#4E0433]`}>{name}</span>
+          <span className=" text-2xl border-b-2 border-b-[#4E0433]">{name}</span>
         </div>
         <h2 className="text-center mb-2 font-semibold italic text-[#4E0433]">
           Search your food
