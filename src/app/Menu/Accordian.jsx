@@ -5,7 +5,7 @@ function Accordion({ id, title, isOpen, onToggle, children }) {
     return (
       <div className="border-b">
         <button
-          className="flex justify-between w-full p-4 text-left text-[#565556] text-lg poppins-semibold bg-[#ffffff]  hover:bg-gray-100"
+          className="flex justify-between w-full p-4 text-left text-[#565556] text-lg poppins-semibold   mix-blend-multiply bg-stone-100"
           onClick={() => onToggle(id)}
         >
           {title}

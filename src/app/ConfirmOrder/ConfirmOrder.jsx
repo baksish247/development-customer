@@ -173,7 +173,7 @@ function ConfirmOrder() {
               }, 2000);
 
               router.push(
-                `/OrderSuccess?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
+                `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
               );
             } else {
               localStorage.removeItem("restaurantId");
@@ -213,7 +213,7 @@ function ConfirmOrder() {
               dispatch(clearCart());
             }, 2000);
             router.push(
-              `/OrderSuccess?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
+              `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
             );
           } else {
             setisbuttonloading(false);
