@@ -1,7 +1,6 @@
 import React,{useState} from 'react';
 
-function GenerateBillModal({ isOpen, onClose, onConfirm }) {
-  const [buttonclicked, setbuttonclicked] = useState(false);
+function GenerateBillModal({buttonclicked,disablebutton, isOpen, onClose, onConfirm }) {
   return (
     <div className={`fixed inset-0 flex items-center justify-center z-50 ${isOpen ? 'block' : 'hidden'}`}>
       <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
@@ -17,11 +16,11 @@ function GenerateBillModal({ isOpen, onClose, onConfirm }) {
             No, Cancel
           </button>
           <button
-            onClick={()=>{setbuttonclicked(true);onConfirm()}}
+            onClick={()=>{disablebutton();onConfirm()}}
             disabled={buttonclicked}
             className="px-4 py-2 bg-[#441029] disabled:scale-95 diabled:bg-[#7c3155] text-white rounded "
           >
-            Yes, Generate
+            {!buttonclicked? "Yes, Generate":"Generating.."}
           </button>
         </div>
       </div>

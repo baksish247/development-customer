@@ -48,7 +48,7 @@ function FetchAllData() {
       const fetchorder = await axios.post("/api/fetchspecificorder", {
       orderId: oid,
       });
-      console.log(fetchorder)
+      
       if(fetchorder.data.success)
       {setorderstatus(fetchorder.data.data[0].order_status)}
     }

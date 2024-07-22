@@ -22,6 +22,11 @@ function Order() {
   const restaurant_name = searchParams.get("name");
   const [isOpen, setisOpen] = useState(false);
   const [orderID, setorderID] = useState("")
+  const [buttonclicked, setbuttonclicked] = useState(false);
+
+  const disablebutton=()=>{
+    setbuttonclicked(true);
+  }
 
   const billgenerationconfirmed=async()=>{
     const res=await axios.post('/api/generatebill',{order_id:orderID})
@@ -175,16 +180,19 @@ function Order() {
                     {item.items.map((item1, j) => (
                       <li
                         key={j}
-                        className="text-gray-700 flex justify-between border-b border-dotted border-gray-400 py-2"
+                        className="text-gray-700 grid grid-cols-10 border-b border-dotted border-gray-400 py-2"
                       >
-                        <span>
-                          {item1?.food?.name}&nbsp;&nbsp;x{item1?.quantity}
+                        <span className="col-span-7">
+                          {item1?.food?.name}
                         </span>{" "}
-                        <span>
+                        
+                          <span>x{item1?.quantity}</span>
+                        <span className="col-span-2 text-right">
                           ₹
                           {parseFloat(item1?.food?.price) *
                             parseFloat(item1?.quantity)}
                         </span>
+                        
                       </li>
                     ))}
                   </div>
@@ -251,6 +259,8 @@ function Order() {
         </div>
       )}
       <GenerateBillModal
+      buttonclicked={buttonclicked}
+      disablebutton={disablebutton}
         isOpen={isOpen}
         onClose={() => setisOpen(false)}
         onConfirm={billgenerationconfirmed}

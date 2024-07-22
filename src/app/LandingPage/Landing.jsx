@@ -30,8 +30,11 @@ const page = () => {
   const router=useRouter();
   const [isterminated, setisterminated] = useState(false)
   const dispatch = useDispatch();
+  const [buttonclicked, setbuttonclicked] = useState(false);
 
-
+  const disablebutton=()=>{
+    setbuttonclicked(true);
+  }
   const billgenerationconfirmed=async()=>{
     console.log(orderID)
     if(orderID!="" || orderID!=null){
@@ -49,6 +52,7 @@ const page = () => {
   else{
     toast.error("Failed to generate bill. Please ask the waiter.")
   }
+  setbuttonclicked(false)
   }
 
   
@@ -141,6 +145,8 @@ const page = () => {
         <div className="absolute text-white bottom-2">powered by BakSISH</div>
         </div>
         <GenerateBillModal
+        buttonclicked={buttonclicked}
+        disablebutton={disablebutton}
         isOpen={isOpen}
         onClose={() => setisOpen(false)}
         onConfirm={billgenerationconfirmed}

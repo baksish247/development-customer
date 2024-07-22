@@ -53,36 +53,36 @@ function Billcomponent({name,order,qrcode}) {
               </Typography>
             </div>
             <div className="border-t-2 mt-4 border-b-2 py-2 mb-4 border-dotted border-gray-400">
-              <div className="flex justify-start mb-2 mr-1 space-x-4 border-b-2 pb-1 border-dotted border-gray-400">
-                <Typography variant="body2" className="w-[50%]">
+              <div className="grid grid-cols-10 justify-items-stretch items-center my-2 border-b-2  border-dotted border-gray-400">
+                <Typography variant="body2" className=" col-span-5">
                   Description
                 </Typography>
-                <Typography variant="body2" className="w-[15%] ">
+                <Typography variant="body2" className="">
                   Qty.
                 </Typography>
-                <Typography variant="body2" className="w-[15%] ">
+                <Typography variant="body2" className="col-span-2 text-right">
                   Price
                 </Typography>
-                <Typography variant="body2" className="w-[15%] ">
+                <Typography variant="body2" className="col-span-2 text-right">
                   Value
                 </Typography>
               </div>
-
+              <div className="">
               {/* Repeat for each item */}
               {order[0].order_items.map((orderitems, j) => (
-                <span key={j}>
+                <span key={j} className="">
                   {orderitems.items.map((item, k) => (
-                    <div key={k} className="flex justify-start mt-1 space-x-4">
-                      <Typography variant="body2" className="w-[50%]">
+                    <div key={k} className="grid grid-cols-10 justify-items-stretch items-center my-2">
+                      <Typography variant="body2" className=" col-span-5">
                         {item?.food?.name?.toUpperCase()}
                       </Typography>
-                      <Typography variant="body2" className="w-[15%]">
+                      <Typography variant="body2" className="">
                        &nbsp;&nbsp;{parseInt(item?.quantity)}
                       </Typography>
-                      <Typography variant="body2" className="w-[15%]">
+                      <Typography variant="body2" className="col-span-2 text-right">
                         {parseFloat(item?.food?.price).toFixed(2)}
                       </Typography>
-                      <Typography variant="body2" className="w-[15%]">
+                      <Typography variant="body2" className="col-span-2 text-right">
                         {(
                           parseFloat(item?.quantity) *
                           parseFloat(item?.food?.price)
@@ -92,6 +92,7 @@ function Billcomponent({name,order,qrcode}) {
                   ))}
                 </span>
               ))}
+              </div>
             </div>
             <div className="flex justify-between mb-2">
               <Typography variant="body2" className="">
@@ -103,17 +104,23 @@ function Billcomponent({name,order,qrcode}) {
             </div>
             <div className="flex justify-between mb-2">
               <Typography variant="body2">
-                Taxes:
+                CGST:
               </Typography>
-              <Typography variant="body2">{order[0]?.tax}</Typography>
+              <Typography variant="body2">{(parseFloat(order[0]?.tax)*0.5).toFixed(3)}</Typography>
+            </div>
+            <div className="flex justify-between mb-2">
+              <Typography variant="body2">
+                SGST:
+              </Typography>
+              <Typography variant="body2">{(parseFloat(order[0]?.tax)*0.5).toFixed(3)}</Typography>
             </div>
             <div className="flex border-t-2 border-b-2 py-2 border-gray-300 justify-between mb-2">
-              <Typography variant="body1" className="font-bold text-xl">
+              <span className="poppins-medium text-xl">
                 TOTAL
-              </Typography>
-              <Typography variant="body1" className="font-bold text-xl">
+              </span>
+              <span className="font-medium text-xl">
                 ₹ {order[0]?.total_bill}
-              </Typography>
+              </span>
             </div>
             <div className="text-[0.52rem] text-center">
             This is not the official bill. Please obtain the original from the reception desk.</div>

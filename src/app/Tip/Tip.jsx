@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import PaymentLoader from "./PaymentLoader";
 import LoadingPage from "../loaders/LoadingPage";
-import { KeyboardBackspace } from "@mui/icons-material";
+import { ArrowBack, KeyboardBackspace, RateReview } from "@mui/icons-material";
 import NotFound from "../not-found";
 
 function Tip() {
@@ -159,7 +159,7 @@ function Tip() {
           alt=""
           className=" -rotate-180 w-32 -my-7 h-auto -mx-5 absolute top-0 left-0 z-0"
         />
-        <div onClick={()=>{router.push(`/?id=${restaurant_id}&table=${table_number}`)}} className="absolute left-3 top-6"><KeyboardBackspace/></div>
+        <div onClick={()=>router.back()} className="absolute left-3 top-6"><KeyboardBackspace/></div>
         <p className="text-2xl text-center font-semibold pt-2">{restaurant_name}</p>
         <p className=" text-lg -my-1 mt-2 text-center mx-auto">Gratitude Corner</p>
       </div>
@@ -233,7 +233,7 @@ function Tip() {
           }
           className="px-4 py-2 bg-[#441029] text-white rounded-md"
         >
-          Leave a rating
+          <RateReview/>&nbsp;&nbsp;Leave a rating
         </button>
       </div>
       <h2 className="text-center text-xl font-sans text-[#441029] italic mx-4 mb-10">

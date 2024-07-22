@@ -23,6 +23,9 @@ const restaurantItemsSchema = new mongoose.Schema({
       reviewLink:{
         type:String,
       },
+      phone:{
+        type:String,
+      }
   
 }, { timestamps: true });
 

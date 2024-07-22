@@ -5,6 +5,7 @@ import goldbg from "../assets/goldbg.png";
 import maskvector from "../assets/Mask_group.png";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useRouter } from 'next/navigation';
+import { KeyboardBackspace } from '@mui/icons-material';
 function OrderHeader({name,id,table}) {
   const router=useRouter();
   return (
@@ -14,6 +15,7 @@ function OrderHeader({name,id,table}) {
       src={maskvector}
       className="absolute top-0 left-0"
     />
+    <div onClick={()=>router.back()} className="absolute left-4 top-6 "><KeyboardBackspace/></div>
     <h1 className="text-4xl pt-14 text-center font-semibold text-[#3d3d3d] ">
           {name}
         </h1>

@@ -8,6 +8,7 @@ import Footer from "../Menu/Footer";
 import BillHeader from "./BillHeader";
 import Billcomponent from "./Billcomponents";
 import NotFound from "../not-found";
+import { ArrowBack, RateReview } from "@mui/icons-material";
 function Bill() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -185,10 +186,11 @@ function Bill() {
           // onClick={() =>
           //   router.push(`/Menu?id=${restaurant_id}&table=${table_number}`)
           // }
-          className="mt-10 px-4 py-2 bg-[#441029] text-white rounded-md"
+          className="mt-10 px-4 py-2 bg-[#441029] text-white text-lg rounded-md"
         >
-          Leave a review
+          <RateReview/>&nbsp;&nbsp;Leave a review
         </button>
+        
       </div>
       <div className="bottom-0">
         <Footer />
