@@ -29,6 +29,17 @@ const handler = async (req, res) => {
           error: "Restaurant not found. Please contact support.",
         });
       }
+      const reserve=restaurant.reserved_tables;
+      if(reserve.length>0){
+        await reserve.map((table)=>{
+          if(parseInt(table.table_number)===parseInt(table_number)){
+            return res.status(201).json({
+              success: false,
+              error: "Sorry!! This table is already reserved. Please choose another table or contact the waiter.",
+            });
+          }
+        })
+      }
 
       // Check if there's an existing order for the table with status 'new'
       const existingOrder = await Orders.findOne({ table_number, restaurant_id});

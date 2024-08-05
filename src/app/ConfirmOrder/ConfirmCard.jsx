@@ -36,14 +36,14 @@ function ConfirmCard({ item }) {
         <div className="mt-2 ">
           <div>
             {cartItem?.quantity > 0 && (
-              <div className="flex bg-[#3a0920] rounded-md  justify-center text-center w-24 h-8 items-center">
+              <div className="flex bg-amber-500 rounded-md  justify-center text-center w-24 h-8 items-center">
                 <span
                   onClick={() => handleUpdateQuantity(cartItem.quantity - 1)}
                   className="cursor-pointer h-full pt-1 w-1/3  text-white"
                 >
                   <RemoveIcon />
                 </span>
-                <span className="text-base h-full pt-1 text-center bg-[#FFF9EA] w-1/3 text-black">{cartItem.quantity}</span>
+                <span className="text-base h-full pt-1 text-center bg-white w-1/3 text-black">{cartItem.quantity}</span>
                 <span
                   onClick={() => handleUpdateQuantity(cartItem.quantity + 1)}
                   className="cursor-pointer w-1/3  text-white"

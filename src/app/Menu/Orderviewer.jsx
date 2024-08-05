@@ -10,6 +10,7 @@ import GenerateBillModal from "./ConfirmGenerateBill";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import PrintIcon from '@mui/icons-material/Print';
 
 function Orderviewer({id,table,order_status,orderid,name}) {
   const router=useRouter();
@@ -56,26 +57,16 @@ function Orderviewer({id,table,order_status,orderid,name}) {
   if (!isHydrated) {
     return null; // Don't render the component if not hydrated or cart is empty
   }
-  
+  console.log(cart.totalQuantity);
   if(cart.totalQuantity==0){
     return(
       <section>
         <Toaster/>
-      <main className="fixed bottom-0 w-full backdrop-blur-md  bg-[#44102987] p-2 text-white z-50">
-        <div className="flex justify-center lg:px-10 px-2 relative items-center p-2">
-          {(order_status=="new" || order_status=="updated" || order_status=="served") && <button onClick={()=>setisOpen(true)} className=" tracking-[0.5rem] bg-white px-10 py-2 font-extrabold text-xl rounded-md text-[#441029]">
-            GENERATE BILL
+      <main className="fixed bottom-3 rounded-full right-4  bg-indigo-600   text-white z-50">
+        <div className="flex justify-center  relative items-center ">
+        {(order_status=="new" || order_status=="updated" || order_status=="served") && <button onClick={()=>setisOpen(true)} className=" tracking-[0.5rem] p-3 px-[0.85rem] font-extrabold text-xl rounded-md text-white">
+            <PrintIcon/>
           </button>}
-          {order_status=="waitingforbill" && <h2  className="text-center text-lg text-white ">
-            Please wait while we get your bill !!<br/>
-            Till then, may be some desserts...
-          </h2>}
-          {order_status=="null" && <h2  className="text-center text-lg text-white ">
-            Welcome! 😊<br/>Explore our variety of menu and place your order.
-          </h2>}
-          {order_status=="billgenerated" && <h2  className="px-2 py-2 text-center text-lg text-white ">
-            Hope you enjoyed your meal !
-          </h2>}
         </div>
       </main>
       <GenerateBillModal
@@ -86,24 +77,24 @@ function Orderviewer({id,table,order_status,orderid,name}) {
     </section>
     )
   }
-  
-  
+
+  else if(cart.totalQuantity>0){
   return (
     <section>
-      <main className="fixed bottom-[8px] w-full border-t-2 border-[#6C0345] z-50">
-        <div className="flex justify-between lg:px-10 px-4 relative items-center h-16 p-2">
-          <Image
+      <main className="fixed bottom-[0px] w-full border-t-2 border-white z-50">
+        <div className="flex justify-between bg-indigo-600 lg:px-10 px-4 relative items-center h-16 p-2">
+          {/* <Image
             src={goldbg}
             alt="bg"
             width={10000}
             priority
             className="-z-10 absolute top-0 left-0"
             height={1000}
-          />
-          <h2 className="text-[#6C0345] font-bold text-xl mt-2">
-            {cart?.totalQuantity} item added <EastIcon />
+          /> */}
+          <h2 className="text-white poppins-medium text-xl">
+            {cart?.totalQuantity} {cart?.totalQuantity>1?"items":"item"} added <EastIcon />
           </h2>
-          <Link href={`/ConfirmOrder?id=${id}&table=${table}`} className="px-6 py-2 mt-2 bg-white border-2 rounded-md text-[#6C0345] border-[#6C0345]">
+          <Link href={`/ConfirmOrder?id=${id}&table=${table}`} className="px-6 py-2 bg-white border-2 rounded-md text-black border-white poppins-medium">
             Review order
           </Link>
         </div>
@@ -111,5 +102,7 @@ function Orderviewer({id,table,order_status,orderid,name}) {
     </section>
   );
 }
+}
+
 
 export default Orderviewer;

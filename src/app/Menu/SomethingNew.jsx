@@ -12,8 +12,8 @@ function SomethingNew({ menu }) {
 
   return (
     <>
-      <Heading heading={"What's New"} />
-      <div className="px-4 -mt-2">
+      <Heading heading={"Chef's Special"} />
+      <div className="px-4 -mt-0">
         <section className="flex  noscroll overflow-x-auto space-x-4 p-4">
           {limitedMenu.map((item) => (
             <SmallViewItem item={item} key={item._id} />

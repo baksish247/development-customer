@@ -11,7 +11,7 @@ function Accordion({ id, title, isOpen, onToggle, children }) {
           {title}
           <span>{isOpen ? <KeyboardArrowUpIcon/> :<KeyboardArrowDownIcon/> }</span>
         </button>
-        {isOpen && <div className="p-4">{children}</div>}
+        {isOpen && <div className="p-4 bg-zinc-100">{children}</div>}
       </div>
     );
   }

@@ -26,7 +26,7 @@ function Billcomponent({name,order,qrcode}) {
     <>
       {order && (
         <div>
-          <div id="invoice" className=" bg-white mx-0 py-8 mt-4 p-3 shadow-md  ">
+          <div id="invoice" className=" bg-zinc-100 mx-0 py-8 mt-4 p-3 drop-shadow-md  ">
             <Typography variant="h6" align="center" className="font-bold mb-4">
               {name?.toUpperCase()}
             </Typography>

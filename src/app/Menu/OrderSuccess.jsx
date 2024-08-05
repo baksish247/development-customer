@@ -6,16 +6,16 @@ import { KeyboardDoubleArrowUp } from '@mui/icons-material';
 function OrderSuccess({orderDetails,onClose}) {
     console.log(orderDetails);
   return (
-    <div className='absolute backdrop-blur-sm  z-10 top-20 w-full p-4 pb-1'>
-    {orderDetails && <div className="w-full -mb-3 flex bg-[#ffffffee]  shadow-lg shadow-[#c4b48b] flex-col rounded-2xl justify-center items-center">
+    <div className='absolute backdrop-blur-xl  z-10 top-20 w-full p-4 pb-1'>
+    {orderDetails && <div className="w-full -mb-3 flex bg-[#dee7fbbe] shadow-lg p-2 shadow-[#c4b48b] flex-col rounded-2xl justify-center items-center">
       <Image height={100} width={100} alt="success" src={success} className='mix-blend-multiply w-48'/>
       <h1 className="text-2xl poppins-medium text-[#441029] mb-2">
         Order Placed!
       </h1>
       
-      <div className=" w-full mx-auto bg-[#ffffffee] shadow-lg rounded-lg pb-3  ">
+      <div className=" w-full mx-auto  bg-[#ffffffee] shadow-lg rounded-xl pb-3  ">
         <div className="mb-4">
-          <h2 className="text-xl font-semibold text-gray-700 px-4">
+          <h2 className="text-xl mt-3 font-semibold text-gray-700 px-4">
             Order Details:
           </h2>
           <hr className="bg-black my-3"/>
@@ -51,7 +51,7 @@ function OrderSuccess({orderDetails,onClose}) {
       </div>
       </div>
     }
-    <div className='flex justify-center items-center mt-'><div className='relative -bottom-8 w-12 bg-[#441029d3] animate-bounce duration-1000 p-3 rounded-full' onClick={onClose}><KeyboardDoubleArrowUp className='text-white'/></div></div>
+    <div className='flex justify-center items-center mt-'><div className='relative -bottom-8 w-12 bg-indigo-600 animate-bounce duration-1000 p-3 rounded-full' onClick={onClose}><KeyboardDoubleArrowUp className='text-white'/></div></div>
     </div>
   )
 }

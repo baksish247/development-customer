@@ -21,7 +21,7 @@ function DisplayCategorywisemenu({menu}) {
   const categories = Array.from(new Set(food_items.map(item => item.category)));
 
   return (
-    <div className="container mx-auto space-y-3 py-8">
+    <div className="container  mx-auto space-y-3 py-8">
       {categories.map(category => (
         <Accordion
           key={category}
@@ -35,8 +35,8 @@ function DisplayCategorywisemenu({menu}) {
             if (subcategoryItems.length === 0) return null;
 
             return (
-              <div key={`${category}-${subcategory} `} className='border-b-2 border-dotted border-[#966729] py-4'>
-                <h3 className="text-lg font-semibold flex items-center">
+              <div key={`${category}-${subcategory} `} className='border-b-2 border-dotted  border-[#966729]'>
+                <h3 className="text-lg font-semibold mb-2 flex items-center">
                   {subcategory === 'Veg' ? <Image src={vegicon} alt="vegicon" className="h-8 w-8"/> : <Image src={nonvegicon} alt="nonvegicon" className="h-6 w-6 mr-1"/>}
                   {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
                 </h3>

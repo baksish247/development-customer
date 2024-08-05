@@ -1,13 +1,12 @@
 .borderbox{
-    border: 1.5px solid transparent;
-background: padding-box linear-gradient(#FFF9EA, #FFF9EA),
-  border-box linear-gradient(#441029, rgb(255 255 255 / 0.1));
+  border: 1.5px solid transparent;
+  
 
 }
 .selected {
-  border: 2px solid #441029; 
+  border: 2px solid indigo; 
   border-bottom: none;/* Gold border to indicate selection */
-  background-color: #FFFACD; /* Light yellow background */
+   /* Light yellow background */
 }
 .tick-mark-container {
   position: absolute;

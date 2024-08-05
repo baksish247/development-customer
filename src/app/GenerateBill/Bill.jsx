@@ -144,18 +144,18 @@ function Bill() {
         id={restaurant_id}
         table={table_number}
       />
-      <div className="flex flex-col justify-center items-center bg-[#FFF9EA] px-4 mb-20 mt-6">
+      <div className="flex flex-col justify-center items-center bg-white px-4 mb-20 mt-6">
         <Toaster />
 
-        <div className="text-lg flex mt-4 justify-center items-center space-x-4 text-[#441029] w-full">
-          <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-transparent to-[#441029]"></div>
+        <div className="text-lg flex mt-4 justify-center items-center space-x-4 text-indigo-600 w-full">
+          <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-transparent to-indigo-600"></div>
           <p className="lg:text-lg text-[18px] uppercase tracking-widest">
             Your Bill
           </p>
-          <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-[#441029] to-transparent"></div>
+          <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-indigo-600 to-transparent"></div>
         </div>
 
-        <p className="text-sm text-[#4E0433] mb-6">Happy you! Happy us!</p>
+        <p className="text-sm text-indigo-600/70 mb-6">Happy you! Happy us!</p>
         {orderDetails && (
           <Billcomponent
             name={restaurant_name}
@@ -166,7 +166,7 @@ function Bill() {
         {!orderDetails && noorderfound && (
           <div className="flex flex-col items-center justify-center mt-32 mb-32">
             <div className="text-center mx-8">
-              <h1 className="text-4xl font-bold text-[#441029]">Welcome!</h1>
+              <h1 className="text-4xl font-bold text-indigo-600">Welcome!</h1>
               <p className="text-lg mt-4 text-gray-700">
                 Seems like this is your first time here.
               </p>
@@ -174,7 +174,7 @@ function Bill() {
                 Order and enjoy your first meal!
               </p>
               <div className="mt-10">
-                <p className="text-lg text-[#441029] font-semibold">
+                <p className="text-lg text-indigo-600 font-semibold">
                   Redirecting you to home page in{" "}
                   <span className="font-bold">{countdown}</span> seconds...
                 </p>
@@ -186,7 +186,7 @@ function Bill() {
           // onClick={() =>
           //   router.push(`/Menu?id=${restaurant_id}&table=${table_number}`)
           // }
-          className="mt-10 px-4 py-2 bg-[#441029] text-white text-lg rounded-md"
+          className="mt-10 px-4 py-2 bg-indigo-600 text-white text-lg rounded-md"
         >
           <RateReview/>&nbsp;&nbsp;Leave a review
         </button>

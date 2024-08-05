@@ -37,11 +37,11 @@ function Header({name,restaurant_id,table_number}) {
   }, []);
 
   return (
-    <div className="h-[250px] relative w-screen bg-gradient-to-b from-[#FFF9EA] mix-blend-multiply to-[#F5EC02]/30">
+    <div className="h-[230px] relative w-screen bg-transparent">
       <Image
         alt="bgbanner"
         src={maskvector}
-        className="absolute top-0 left-0"
+        className="absolute top-0 left-0 h-2"
       />
       <div className="flex justify-between items-center p-6">
         {/* <img
@@ -49,8 +49,8 @@ function Header({name,restaurant_id,table_number}) {
           alt="BakSish"
           className="mb-4"
         /> */}
-        <span className=" text-2xl border-b-2 poppins-medium border-b-[#4E0433]">{name}</span>
-        <Link href={`/MyOrder?id=${restaurant_id}&table=${table_number}&name=${name}`} className="rounded-full border shadow-inner   border-[#6C0345] text-sm py-1 px-2">My Order</Link>
+        <span className=" text-xl border-b-2 poppins-medium border-b-indigo-600">{name}</span>
+        <Link href={`/MyOrder?id=${restaurant_id}&table=${table_number}&name=${name}`} className="rounded-md border shadow-md  text-indigo-600 border-indigo-600 text-md py-1 px-4">My Order</Link>
       </div>
      
       <div className={`search px-10 relative`}>
@@ -58,27 +58,27 @@ function Header({name,restaurant_id,table_number}) {
           onClick={() => {
             router.push(`/SearchItems?id=${restaurant_id}&name=${name}&table=${table_number}`);
           }}
-          className="pr-8 pl-10 h-10 focus:ring-0 shadow-md bg-[#FFF9EA] w-full rounded-full"
+          className="pr-8 pl-10 h-12 focus:ring-0  bg-white border-[0.1px] border-black border-opacity-25 w-full rounded-md shadow-md"
         >
-        <SearchIcon className="absolute top-3 text-[#4E0433] h-6 left-12" />
-        <span className="absolute top-[0.7rem] text-gray-400">Type "Butter nan"</span>
+        <SearchIcon className="absolute top-3 text-[#222] opacity-80 h-10 left-14 poppins-regular " />
+        <span className="absolute top-[0.8rem] left-24 text-gray-600">Search for Your Favourites</span>
         </div>
       </div>
-      <div className="mt-8 h-8 relative">
-        <Image
+      <div className="mt-5 h-8 relative">
+        {/* <Image
           src={goldbg}
           alt="bggolds"
-          className="object-cover absolute focus:border-none left-0 top-0 -z-10 h-full w-screen object-center"
-        />
-        <p className="text-center poppins-semibold p-1 text-[#6C0345]">
-          Now you can review and rate our service !!
+          className="object-cover absolute focus:border-none left-0 top-0 -z-10 h-4 w-screen object-center"
+        /> */}
+        <p className="text-center poppins-regular p-1 text-[#222] text-[12px] width-full bg-[#FFC011]">
+         Now you can review and rate our service !
         </p>
       </div>
       <div className="flex relative justify-center items-center mt-4">
         <button
         type="button"
           onClick={()=>{router.push(`/Tip?id=${restaurant_id}&table=${table_number}`)}}
-          className="bg-[#6C0345] rounded-full py-1 px-4 text-[#FFF9EA] flex justify-center items-center hover:scale-90 "
+          className="py-1 px-4 rounded-full text-white bg-indigo-600 flex justify-center items-center hover:scale-90 "
         >
           Treat the team
           

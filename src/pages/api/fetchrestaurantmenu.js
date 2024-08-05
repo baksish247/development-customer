@@ -7,6 +7,7 @@ import RestaurantItems from "../../../models/RestaurantItems";
 
 const handler=async(req,res)=>{
     if(req.method=="POST"){
+        console.log(req.body);
         try{
         const {restaurant_id}=req.body;
         const menu=await RestaurantItems.findOne({restaurant_id}).populate('food_items');

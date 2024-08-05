@@ -66,7 +66,7 @@ const page = () => {
         dispatch(clearCart());
         setname(res.data.data.restaurant_name)
         const order_id=localStorage.getItem('orderId');
-        //console.log(order_id);
+        console.log(order_id);
         if(order_id){
         const resvalid=await axios.post('/api/fetchvalidorder',{order_id})
         //
@@ -77,6 +77,8 @@ const page = () => {
           }
           else{
             setorderID(order_id);
+            router.push(`/Menu?id=${id}&table=${table_number}&name=${res.data.data.restaurant_name}`)
+            
           }
         }
       }
@@ -88,7 +90,7 @@ const page = () => {
       setisterminated(true);
     }
     fetchdetails();
-  }, [])
+  }, [id])
   
   if(!name || !isterminated){
     return <div><LandingLoader/></div>
@@ -98,49 +100,50 @@ const page = () => {
   return (
     <>
     <Toaster/>
-      {name && name!="notfoundpage" &&<div className="w-screen min-h-screen  relative bg-gradient-to-bl overflow-hidden  from-[#430123] to-[#5A0132]">
-        <Image
+      {name && name!="notfoundpage" &&<div className="w-screen min-h-screen  relative bg-white">
+        {/* <Image
           src={border}
           className="  absolute  top-3 left-3 lg:hidden block   h-[93%] w-[94%] "
           alt="bg"
           priority
           width={300}
           height={3000}
-        />
+        /> */}
         {/*  */}
         <div className="relative h-64 flex justify-center items-center lg:mt-32 mt-10">
-          <Image
+          {/* <Image
           alt="heading"
             src={heading}
             height={500}
             width={500}
             className="h-60 w-60 mx-auto  centered-axis-x "
-          />
-          <h1 className=" tracking-widest absolute text-center -mt-3 poppins-medium uppercase text-white text-2xl ">
+          /> */}
+          <h1 className=" tracking-widest absolute text-center -mt-3 poppins-medium uppercase text-black text-2xl ">
             {name}
           </h1>
         </div>
-        <div className="flex justify-center  items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-6 mt-2">
-          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-light text-center w-48 z-50 border-[#FFF9EA] bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
-          <History/> Previous Orders
-          </button>
-          <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-center poppins-light w-48 border-[#FFF9EA] z-50 bg-[#440129] px-4 rounded-full text-[#FFF9EA] py-3">
+        <div className="flex justify-center items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-[16px] mt-20">
+        <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-[18px] text-center poppins-light w-64  border-white z-50 bg-indigo-600 px-4 rounded-md text-[#FFF9EA] py-3">
             <EditNote/> Place an Order
           </button>
-          <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-3 z-50 rounded-full text-[#FFF9EA] py-3">
+          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-light text-center w-64 z-50 border-indigo-600 bg-transparent px-4 rounded-md text-indigo-600 py-3">
+          <History/> Previous Orders
+          </button>
+          
+          {/* <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-3 z-50 rounded-full text-[#FFF9EA] py-3">
             <ReceiptLong/> Generate my Bill
           </button>
           <button disabled={!isterminated} onClick={()=>window.location=`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2  text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
             <CurrencyRupee/> Treat the Team
-          </button>
+          </button> */}
         </div>
-        <Image
+        {/* <Image
           className="absolute z-10  bottom-6 w-[80%]  -right-2 lg:hidden block "
           src={chef}
           alt="bottomimg"
           width={1000}
           height={1000}
-        />
+        /> */}
         <div className="flex items-center justify-center">
         <div className="absolute text-white bottom-2">powered by BakSISH</div>
         </div>

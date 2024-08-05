@@ -168,10 +168,8 @@ function ConfirmOrder() {
             const res = await axios.post("api/createneworder", orderDetails);
 
             if (res.data.success) {
-              setTimeout(() => {
-                dispatch(clearCart());
-              }, 2000);
-
+              
+              dispatch(clearCart());
               router.push(
                 `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
               );
@@ -209,9 +207,8 @@ function ConfirmOrder() {
           const res = await axios.post("api/updateexistingorder", orderDetails);
 
           if (res.data.success) {
-            setTimeout(() => {
-              dispatch(clearCart());
-            }, 2000);
+            
+            dispatch(clearCart());
             router.push(
               `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
             );
@@ -241,7 +238,7 @@ function ConfirmOrder() {
     <div>
       <Toaster />
       <header>
-        <div className="h-16 bg-[#441029] flex justify-between px-4 items-center">
+        <div className="h-16 bg-indigo-600 flex justify-between px-4 items-center">
           <div>
             <h1 className="text-xl poppins-semibold text-[#fff9ea]">Cart</h1>
             <p className="text-white text-sm">
@@ -258,7 +255,7 @@ function ConfirmOrder() {
           </div>
           <Link
             href={`/Menu?id=${restaurant_id}&table=${table_number}`}
-            className="px-4 poppins-bold py-2 tracking-widest bg-white border-2 rounded-md text-[#6C0345] border-[#6C0345]"
+            className="px-4 poppins-bold py-2 tracking-widest bg-white border-2 rounded-md text-amber-600 border-amber-500"
           >
             EDIT
           </Link>
@@ -278,7 +275,7 @@ function ConfirmOrder() {
               rows="2"
               value={notes}
               onChange={(e) => setnotes(e.target.value)}
-              className="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border-2 border-[#441029] "
+              className="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border-2 border-amber-500 "
               placeholder="Write your instructions..."
             ></textarea>
           </div>
@@ -316,18 +313,18 @@ function ConfirmOrder() {
           </div>
         </section>
       </main>
-      <footer className="h-[100px] fixed bottom-0 w-full bg-[#441029] p-4 text-white flex justify-center items-center">
+      <footer className="h-[100px] fixed bottom-0 w-full bg-indigo-600 p-4 text-white flex justify-center items-center">
         <button
           onClick={() => {
             setisbuttonloading(true);
             handleplaceorder();
           }}
           disabled={isbuttonloading || !isInitialized} // Disable button if not initialized
-          className="bg-white border-2 px-4 py-2 w-full rounded-lg text-[#441029] tracking-[0.5rem] font-extrabold relative"
+          className="bg-white border-2 px-4 py-2 w-full rounded-lg text-indigo-600 tracking-[0.5rem] font-extrabold relative"
         >
           {isbuttonloading || !isInitialized ? (
             <svg
-              className="animate-spin h-5 w-5 text-[#441029] absolute left-4"
+              className="animate-spin h-5 w-5 text-indigo-600 absolute left-4"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
