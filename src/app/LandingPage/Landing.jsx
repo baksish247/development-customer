@@ -10,7 +10,12 @@ import chef from "../assets/iconfood.png";
 import heading from "../assets/heading.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { CurrencyRupee, EditNote, History, ReceiptLong } from "@mui/icons-material";
+import {
+  CurrencyRupee,
+  EditNote,
+  History,
+  ReceiptLong,
+} from "@mui/icons-material";
 import LoadingPage from "../loaders/LoadingPage";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,145 +23,189 @@ import NotFound from "../not-found";
 import { clearCart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
 import LandingLoader from "./LandingLoader";
-
+import chefhat from '../assets/chefhat.png';
 
 const page = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const table_number = searchParams.get("table");
-  const [name, setname] = useState("")
+  const [name, setname] = useState("");
   const [isOpen, setisOpen] = useState(false);
-  const [orderID, setorderID] = useState("")
-  const router=useRouter();
-  const [isterminated, setisterminated] = useState(false)
+  const [orderID, setorderID] = useState("");
+  const router = useRouter();
+  const [isterminated, setisterminated] = useState(false);
   const dispatch = useDispatch();
   const [buttonclicked, setbuttonclicked] = useState(false);
 
-  const disablebutton=()=>{
+  const disablebutton = () => {
     setbuttonclicked(true);
-  }
-  const billgenerationconfirmed=async()=>{
-    console.log(orderID)
-    if(orderID!="" || orderID!=null){
-    const res=await axios.post('/api/generatebill',{order_id:orderID})
-    if(res.data.success){
-    router.push(
-      `/GenerateBill?id=${id}&table=${table_number}&name=${name}`
-    )
-  }
-  else{
-    setisOpen(false);
-    toast.error("You haven't placed any order yet.")
-  }
-  }
-  else{
-    toast.error("Failed to generate bill. Please ask the waiter.")
-  }
-  setbuttonclicked(false)
-  }
+  };
+  const billgenerationconfirmed = async () => {
+    if (orderID != "" || orderID != null) {
+      const res = await axios.post("/api/generatebill", { order_id: orderID });
+      if (res.data.success) {
+        router.push(
+          `/GenerateBill?id=${id}&table=${table_number}&name=${name}`
+        );
+      } else {
+        setisOpen(false);
+        toast.error("You haven't placed any order yet.");
+      }
+    } else {
+      toast.error("Failed to generate bill. Please ask the waiter.");
+    }
+    setbuttonclicked(false);
+  };
 
-  
   useEffect(() => {
-    
-    const fetchdetails=async()=>{
-      const res=await axios.post('/api/fetchrestaurantmenu',{restaurant_id:id})
+    const fetchdetails = async () => {
+      const res = await axios.post("/api/fetchrestaurantmenu", {
+        restaurant_id: id,
+      });
       //console.log(res.data.data)
-      if(res.data.success)
-      {
+      if (res.data.success) {
         dispatch(clearCart());
-        setname(res.data.data.restaurant_name)
-        const order_id=localStorage.getItem('orderId');
-        console.log(order_id);
-        if(order_id){
-        const resvalid=await axios.post('/api/fetchvalidorder',{order_id})
-        //
-        console.log(resvalid.data.valid);
-        if(resvalid.data.success){
-          if(!resvalid.data.valid){
-            localStorage.removeItem('orderId');
-          }
-          else{
-            setorderID(order_id);
-            router.push(`/Menu?id=${id}&table=${table_number}&name=${res.data.data.restaurant_name}`)
-            
+        setname(res.data.data.restaurant_name);
+        const order_id = localStorage.getItem("orderId");
+        //console.log(order_id);
+        if (order_id) {
+          const resvalid = await axios.post("/api/fetchvalidorder", {
+            order_id,
+          });
+          //
+          console.log(resvalid.data.valid);
+          if (resvalid.data.success) {
+            if (!resvalid.data.valid) {
+              localStorage.removeItem("orderId");
+            } else {
+              setorderID(order_id);
+              router.push(
+                `/Menu?id=${id}&table=${table_number}&name=${res.data.data.restaurant_name}`
+              );
+            }
           }
         }
-      }
-      }
-      else
-      {
-        setname("notfoundpage")
+      } else {
+        setname("notfoundpage");
       }
       setisterminated(true);
-    }
+    };
     fetchdetails();
-  }, [id])
-  
-  if(!name || !isterminated){
-    return <div><LandingLoader/></div>
+  }, [id]);
+
+  if (!name || !isterminated) {
+    return (
+      <div>
+        <LandingLoader />
+      </div>
+    );
   }
 
-
   return (
-    <>
-    <Toaster/>
-      {name && name!="notfoundpage" &&<div className="w-screen min-h-screen  relative bg-white">
-        {/* <Image
-          src={border}
-          className="  absolute  top-3 left-3 lg:hidden block   h-[93%] w-[94%] "
-          alt="bg"
-          priority
-          width={300}
-          height={3000}
-        /> */}
-        {/*  */}
-        <div className="relative h-64 flex justify-center items-center lg:mt-32 mt-10">
-          {/* <Image
-          alt="heading"
-            src={heading}
-            height={500}
-            width={500}
-            className="h-60 w-60 mx-auto  centered-axis-x "
-          /> */}
-          <h1 className=" tracking-widest absolute text-center -mt-3 poppins-medium uppercase text-black text-2xl ">
-            {name}
-          </h1>
+    <div className="bg-indigo-400/10 h-screen py-10 relative overflow-hidden">
+      
+      <Toaster />
+      <div style={{
+  position: 'absolute',
+  top: '-12%',
+  left: '-20%',
+  width: '200px',
+  height: '200px',
+  backgroundColor: '#4F46E5',
+  borderRadius: '50%',
+  zIndex: 0, // Ensure these are behind all other content
+  opacity: 0.2, // Soothing effect
+}}></div>
+
+<div style={{
+  position: 'absolute',
+  top: '40%',
+  right: '-30%',
+  width: '200px',
+  height: '200px',
+  backgroundColor: '#4F46E5',
+  borderRadius: '50%',
+  transform: 'rotate(70deg)',
+  zIndex: 0, // Ensure these are behind all other content
+  opacity: 0.2, // Soothing effect
+}}></div>
+      {name && name != "notfoundpage" && (
+        <div className="w-screen max-h-screen  ">
+          <div className="relative max-w-screen overflow-x-hidden flex justify-center flex-col items-center ">
+            <Image src={chefhat} width={150} height={150} alt="chefhat"/>
+            <h1 className=" tracking-widest mb-16   text-center  poppins-medium uppercase text-black text-2xl ">
+              {name}
+            </h1>
+          </div>
+          <div className="flex justify-center items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-[16px] ">
+            <button
+              disabled={!isterminated}
+              onClick={() =>
+                (window.location = `/Menu?id=${id}&table=${table_number}&name=${name}`)
+              }
+              className="border-2 text-[18px] text-center poppins-light w-64  border-white z-50 bg-indigo-600 px-4 rounded-md text-[#FFF9EA] py-3"
+            >
+              <EditNote /> Place an Order
+            </button>
+            <button
+              disabled={!isterminated}
+              onClick={() =>
+                (window.location = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
+              }
+              className="border-2 poppins-light text-center w-64 z-50 border-indigo-600 bg-transparent px-4 rounded-md text-indigo-600 py-3"
+            >
+              <History /> Previous Orders
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center absolute bottom-0">
+            <div className="absolute text-white bottom-2">
+              powered by BakSISH
+            </div>
+          </div>
+          <GenerateBillModal
+            buttonclicked={buttonclicked}
+            disablebutton={disablebutton}
+            isOpen={isOpen}
+            onClose={() => setisOpen(false)}
+            onConfirm={billgenerationconfirmed}
+          />
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            overflow: 'hidden',
+            lineHeight: 0,
+            transform: 'rotate(180deg)',
+        }}>
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 1200 120" 
+                preserveAspectRatio="none" 
+                style={{
+                    position: 'relative',
+                    display: 'block',
+                    width: 'calc(131% + 1px)',
+                    height: '120px',
+                }}
+            >
+                
+                <path 
+                    d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
+                    style={{ fill: '#4F46E5' }} 
+                />
+            </svg>
         </div>
-        <div className="flex justify-center items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-[16px] mt-20">
-        <button disabled={!isterminated} onClick={()=>window.location=`/Menu?id=${id}&table=${table_number}&name=${name}`}  className="border-2 text-[18px] text-center poppins-light w-64  border-white z-50 bg-indigo-600 px-4 rounded-md text-[#FFF9EA] py-3">
-            <EditNote/> Place an Order
-          </button>
-          <button disabled={!isterminated} onClick={()=>window.location=`/PreviousOrders?id=${id}&table=${table_number}&name=${name}`}  className="border-2 poppins-light text-center w-64 z-50 border-indigo-600 bg-transparent px-4 rounded-md text-indigo-600 py-3">
-          <History/> Previous Orders
-          </button>
-          
-          {/* <button disabled={!isterminated} onClick={()=>{setisOpen(true)}}  className="border-2 cursor-pointer text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-3 z-50 rounded-full text-[#FFF9EA] py-3">
-            <ReceiptLong/> Generate my Bill
-          </button>
-          <button disabled={!isterminated} onClick={()=>window.location=`/Tip?id=${id}&table=${table_number}&name=${name}`}  className="border-2  text-center poppins-light w-48 border-[#FFF9EA] bg-[#440129] px-4 z-50 rounded-full text-[#FFF9EA] py-3">
-            <CurrencyRupee/> Treat the Team
-          </button> */}
+        
         </div>
-        {/* <Image
-          className="absolute z-10  bottom-6 w-[80%]  -right-2 lg:hidden block "
-          src={chef}
-          alt="bottomimg"
-          width={1000}
-          height={1000}
-        /> */}
-        <div className="flex items-center justify-center">
-        <div className="absolute text-white bottom-2">powered by BakSISH</div>
+      )}
+      {name && name == "notfoundpage" && (
+        <div>
+          <NotFound />
         </div>
-        <GenerateBillModal
-        buttonclicked={buttonclicked}
-        disablebutton={disablebutton}
-        isOpen={isOpen}
-        onClose={() => setisOpen(false)}
-        onConfirm={billgenerationconfirmed}
-      />
-      </div>}
-      {name && name=="notfoundpage" &&<div><NotFound/></div>}
-    </>
+      )}
+    </div>
   );
 };
 

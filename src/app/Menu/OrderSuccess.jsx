@@ -4,7 +4,7 @@ import success from "../assets/ordersuccess.gif";
 import { KeyboardDoubleArrowUp } from '@mui/icons-material';
 
 function OrderSuccess({orderDetails,onClose}) {
-    console.log(orderDetails);
+    //console.log(orderDetails);
   return (
     <div className='absolute backdrop-blur-xl  z-10 top-20 w-full p-4 pb-1'>
     {orderDetails && <div className="w-full -mb-3 flex bg-[#dee7fbbe] shadow-lg p-2 shadow-[#c4b48b] flex-col rounded-2xl justify-center items-center">

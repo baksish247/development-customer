@@ -74,7 +74,7 @@ function Order() {
               });
 
               //
-              console.log(res.data.data);
+              //console.log(res.data.data);
 
               if (!res.data.success) {
                 toast.error(

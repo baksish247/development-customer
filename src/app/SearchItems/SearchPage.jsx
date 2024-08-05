@@ -1,17 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import Image from "next/image";
-import maskvector from "../assets/Mask_group.png";
+import {IoMdArrowBack} from 'react-icons/io';
 import LongCard from "../Menu/LongCard";
 import Orderviewer from "../Menu/Orderviewer";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import LoadingPage from "../loaders/LoadingPage";
 import NotFound from "../not-found";
 
-
 function SearchPage() {
+  const router = useRouter();
   const [foodItems, setFoodItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [query, setQuery] = useState("");
@@ -25,46 +24,45 @@ function SearchPage() {
 
   // Fetch menu data only after initial render
   useEffect(() => {
-    try{
-    const getMenu = async () => {
-      try {
-        const res = await axios.post("/api/fetchrestaurantmenu", {
-          restaurant_id,
-        });
-        setFoodItems(res.data.data.food_items);
-        setFilteredItems(res.data.data.food_items);
-      } catch (e) {
-        console.error(e); // Log error if data fetching fails
-      } finally {
-        setIsLoading(false); // Set loading state to false after data fetch
+    try {
+      const getMenu = async () => {
+        try {
+          const res = await axios.post("/api/fetchrestaurantmenu", {
+            restaurant_id,
+          });
+          setFoodItems(res.data.data.food_items);
+          setFilteredItems(res.data.data.food_items);
+        } catch (e) {
+          console.error(e); // Log error if data fetching fails
+        } finally {
+          setIsLoading(false); // Set loading state to false after data fetch
+        }
+      };
+
+      if (!isInitialLoad) {
+        getMenu();
+      } else {
+        setIsInitialLoad(false);
       }
-    };
-    
-    if (!isInitialLoad) {
-      getMenu();
-    } else {
-      setIsInitialLoad(false);
+    } catch (e) {
+      return <NotFound />;
     }
-  }
-  catch(e){
-    return (<NotFound/>)
-  }
   }, [restaurant_id, isInitialLoad]);
 
   // Filter food items when the query changes
   useEffect(() => {
-    try{
-    if (foodItems.length > 0) {
-      const filtered = foodItems.filter(
-        (item) =>
-          item.name.toLowerCase().includes(query.toLowerCase()) ||
-          item.description.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredItems(filtered);
+    try {
+      if (foodItems.length > 0) {
+        const filtered = foodItems.filter(
+          (item) =>
+            item.name.toLowerCase().includes(query.toLowerCase()) ||
+            item.description.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredItems(filtered);
+      }
+    } catch (e) {
+      return <NotFound />;
     }
-  }catch(e){
-    return (<NotFound/>)
-  }
   }, [query, foodItems]);
 
   const handleSearch = (e) => {
@@ -72,23 +70,17 @@ function SearchPage() {
   };
 
   if (isLoading && isInitialLoad) {
-    return (
-      <LoadingPage/>
-    );
+    return <LoadingPage />;
   }
 
   return (
-    <div className="min-h-screen pb-32">
-      <div className="h-[180px] mb-6 relative w-screen bg-gradient-to-b from-[#FFF9EA] mix-blend-multiply to-[#F5EC02]/30">
-        <Image
-          alt="bgbanner"
-          src={maskvector}
-          className="absolute top-0 left-0 object-cover"
-        />
-        <div className="flex justify-between items-center p-6">
-          <span className=" text-2xl border-b-2 border-b-[#4E0433]">{name}</span>
+    <div className="min-h-screen pb-32 poppins-medium">
+      <div className="h-[180px] mb-6 relative w-screen  bg-white">
+        
+        <div className="flex justify-start space-x-2 items-center p-6">
+        <span><IoMdArrowBack className="size-6 cursor-pointer" onClick={()=>router.push('/Menu?id=RES_45966cf2-ea3a-4dee-a982-c00075a3a61f&name=Angshupriya&table=2')}/></span>  <span className=" text-2xl border-b-2 border-indigo-600">{name}</span>
         </div>
-        <h2 className="text-center mb-2 font-semibold italic text-[#4E0433]">
+        <h2 className="text-center mb-2 font-semibold  text-zinc-600">
           Search your food
         </h2>
         <div className="search px-10 relative">
@@ -97,13 +89,13 @@ function SearchPage() {
             value={query}
             onChange={handleSearch}
             placeholder="Type 'butter naan'"
-            className="pr-8 pl-10 h-10 focus:ring-0 shadow-md bg-[#FFF9EA] w-full rounded-full"
+            className="pr-8 pl-10 h-10 focus:ring-0 drop-shadow-md border-zinc-500 border bg-white rounded-md w-full"
           />
-          <SearchIcon className="absolute top-[10px] text-[#4E0433] h-6 left-12" />
+          <SearchIcon className="absolute top-[10px] text-amber-600 h-6 left-12" />
         </div>
       </div>
       <div className="mx-auto px-4">
-        <div className="grid grid-cols-1 gap-4 shadow-md">
+        <div className="grid grid-cols-1 gap-4 drop-shadow-md">
           {filteredItems?.map((item, i) => (
             <LongCard key={i} item={item} />
           ))}

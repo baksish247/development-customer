@@ -6,8 +6,8 @@ import Landing from "./LandingPage/Landing";
 
 export default function Home() {
   return (
-    <Suspense fallback={<LoadingPage/>}>
-      <Landing/>
-      </Suspense>
+    <Suspense fallback={<LoadingPage />}>
+      <Landing />
+    </Suspense>
   );
 }

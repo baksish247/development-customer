@@ -39,7 +39,7 @@ function Orderviewer({id,table,order_status,orderid,name}) {
   }, [dispatch]);
 
   const billgenerationconfirmed=async()=>{
-    console.log(orderid,id,table,name)
+   // console.log(orderid,id,table,name)
     toast.loading("Generating bill");
     const res=await axios.post('/api/generatebill',{order_id:orderid})
     if(res.data.success){
@@ -57,12 +57,12 @@ function Orderviewer({id,table,order_status,orderid,name}) {
   if (!isHydrated) {
     return null; // Don't render the component if not hydrated or cart is empty
   }
-  console.log(cart.totalQuantity);
+  //console.log(cart.totalQuantity);
   if(cart.totalQuantity==0){
     return(
       <section>
         <Toaster/>
-      <main className="fixed bottom-3 rounded-full right-4  bg-indigo-600   text-white z-50">
+      <main className="fixed bottom-5 rounded-full right-4  bg-amber-500   text-white z-50">
         <div className="flex justify-center  relative items-center ">
         {(order_status=="new" || order_status=="updated" || order_status=="served") && <button onClick={()=>setisOpen(true)} className=" tracking-[0.5rem] p-3 px-[0.85rem] font-extrabold text-xl rounded-md text-white">
             <PrintIcon/>
