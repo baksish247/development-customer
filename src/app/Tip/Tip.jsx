@@ -18,7 +18,7 @@ function Tip() {
   const searchParams = useSearchParams();
   const [selectedwaiters, setselectedwaiters] = useState([]);
   const restaurant_id = searchParams.get("id");
-  const table_number= searchParams.get("table");
+  const table_number = searchParams.get("table");
   const router = useRouter();
   const [waiterdata, setwaiterdata] = useState([]);
   const [review, setreview] = useState("");
@@ -27,25 +27,26 @@ function Tip() {
   const [reviewlink, setreviewlink] = useState("");
 
   useEffect(() => {
-    try{
-    const fetchwaiters = async () => {
-      const restaurantdata=await axios.post(`api/fetchrestaurantmenu`,{restaurant_id})
-      setrestaurant_name(restaurantdata.data.data.restaurant_name);
-      setreviewlink(restaurantdata.data.data.reviewLink);
-      
-      const res = await axios.post("/api/fetchwaiters", { restaurant_id });
-      //console.log(res.data);
-      if (res.data.success && res.data.data.length > 0) {
-        setwaiterdata(res.data.data);
-      } else {
-        setwaiternotfound(true);
-      }
-    };
-    fetchwaiters();
-  }
-  catch(e){
-    return(<NotFound/>)
-  }
+    try {
+      const fetchwaiters = async () => {
+        const restaurantdata = await axios.post(`api/fetchrestaurantmenu`, {
+          restaurant_id,
+        });
+        setrestaurant_name(restaurantdata.data.data.restaurant_name);
+        setreviewlink(restaurantdata?.data?.data?.reviewLink || "");
+
+        const res = await axios.post("/api/fetchwaiters", { restaurant_id });
+        //console.log(res.data);
+        if (res.data.success && res.data.data.length > 0) {
+          setwaiterdata(res.data.data);
+        } else {
+          setwaiternotfound(true);
+        }
+      };
+      fetchwaiters();
+    } catch (e) {
+      return <NotFound />;
+    }
   }, []);
 
   const addandremovewaiter = (waiter_id) => {
@@ -58,81 +59,80 @@ function Tip() {
   };
 
   const handlePayment = async () => {
-    try{
-    const res = await axios.post("/api/tipcreateorder", {
-      amount: parseInt(tipamount) * 100,
-      reciept: "abcd",
-    });
-    if (res.data.success) {
-      const data = res.data.data;
-      //console.log(data);
-      if (data.id) {
-        const initiateTransactionToDatabase = await axios.post(
-          "/api/prepaymentDatabase",
-          {
-            orderId: data.id,
-            restaurant_id: restaurant_id,
-            employees: selectedwaiters,
-            review: review,
-            amount: data.amount,
-          }
-        );
-        
-        // if (res_initiateTransactionToDatabase.success) {
-        const options = {
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          amount: data.amount,
-          currency: data.currency,
-          name: "Baksish",
-          description: "Treat from the customer",
-          image: "https://i.ibb.co/GdjdKb9/Untitled-design-2.png",
-          order_id: data.id,
-          handler: async function (response) {
-            setisProcessingPayment(true); // Show loader during payment processing
-            const verificationRes = await axios.post(
-              "/api/tipverifyorderpayment",
-              {
-                order_id: data.id,
-                payment_id: response.razorpay_payment_id,
-                signature: response.razorpay_signature,
-              }
-            );
-            if (verificationRes.data.success) {
-              router.push(reviewlink);
-            } else {
-              alert("Payment verification failed");
-              window.location.reload();
+    try {
+      const res = await axios.post("/api/tipcreateorder", {
+        amount: parseInt(tipamount) * 100,
+        reciept: "abcd",
+      });
+      if (res.data.success) {
+        const data = res.data.data;
+        //console.log(data);
+        if (data.id) {
+          const initiateTransactionToDatabase = await axios.post(
+            "/api/prepaymentDatabase",
+            {
+              orderId: data.id,
+              restaurant_id: restaurant_id,
+              employees: selectedwaiters,
+              review: review,
+              amount: data.amount,
             }
-            setisProcessingPayment(false); // Hide loader after payment processing
-          },
-          prefill: {
-            name: "Baksish",
-            email: "baksish247@gmail.com",
-            contact: 9900990099,
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-            employees: selectedwaiters,
-          },
-          theme: {
-            color: "#fde047",
-          },
-        };
+          );
 
-        const rzp1 = new window.Razorpay(options);
-        rzp1.open();
-        setisbuttonloading(false);
-        //setIsLoading(false);
-      } else {
-        alert(
-          "Failed to initiate payment. Please reload the page and try again."
-        );
+          // if (res_initiateTransactionToDatabase.success) {
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+            amount: data.amount,
+            currency: data.currency,
+            name: "Baksish",
+            description: "Treat from the customer",
+            image: "https://i.ibb.co/GdjdKb9/Untitled-design-2.png",
+            order_id: data.id,
+            handler: async function (response) {
+              setisProcessingPayment(true); // Show loader during payment processing
+              const verificationRes = await axios.post(
+                "/api/tipverifyorderpayment",
+                {
+                  order_id: data.id,
+                  payment_id: response.razorpay_payment_id,
+                  signature: response.razorpay_signature,
+                }
+              );
+              if (verificationRes.data.success) {
+                router.push(reviewlink ?? "https://baksish.in");
+              } else {
+                alert("Payment verification failed");
+                window.location.reload();
+              }
+              setisProcessingPayment(false); // Hide loader after payment processing
+            },
+            prefill: {
+              name: "Baksish",
+              email: "baksish247@gmail.com",
+              contact: 9900990099,
+            },
+            notes: {
+              address: "Razorpay Corporate Office",
+              employees: selectedwaiters,
+            },
+            theme: {
+              color: "#fde047",
+            },
+          };
+
+          const rzp1 = new window.Razorpay(options);
+          rzp1.open();
+          setisbuttonloading(false);
+          //setIsLoading(false);
+        } else {
+          alert(
+            "Failed to initiate payment. Please reload the page and try again."
+          );
+        }
       }
+    } catch (e) {
+      return <NotFound />;
     }
-  }
-  catch(e){
-    return(<NotFound/>)
-  }
   };
 
   if (!waiterdata || (waiterdata.length == 0 && !waiternotfound)) {
@@ -159,9 +159,17 @@ function Tip() {
           alt=""
           className=" -rotate-180 w-32 -my-7 h-auto -mx-5 absolute top-0 left-0 z-0"
         /> */}
-        <div onClick={()=>router.back()} className="absolute left-3 top-6"><KeyboardBackspace/></div>
-        <p className="text-2xl text-center font-semibold pt-2"><span className="border-b-indigo-600 border-b-2">{restaurant_name}</span></p>
-        <p className=" text-lg -my-1 mt-2 text-center mx-auto">Gratitude Corner</p>
+        <div onClick={() => router.back()} className="absolute left-3 top-6">
+          <KeyboardBackspace />
+        </div>
+        <p className="text-2xl text-center font-semibold pt-2">
+          <span className="border-b-indigo-600 border-b-2">
+            {restaurant_name}
+          </span>
+        </p>
+        <p className=" text-lg -my-1 mt-2 text-center mx-auto">
+          Gratitude Corner
+        </p>
       </div>
       {waiternotfound && (
         <div className="mt-20 text-center mb-10">
@@ -219,7 +227,9 @@ function Tip() {
               setisbuttonloading(true);
               handlePayment();
             }}
-            disabled={tipamount == "" || isbuttonloading || parseInt(tipamount)<10}
+            disabled={
+              tipamount == "" || isbuttonloading || parseInt(tipamount) < 10
+            }
             className="bg-indigo-600 w-32 hover:scale-95 disabled:scale-95 disabled:opacity-45 px-3 rounded-lg text-white"
           >
             {isbuttonloading ? "LOADING" : "TREAT"}
@@ -228,12 +238,11 @@ function Tip() {
       </div>
       <div className="flex mt-8 mb-10 items-center hover:scale-95 justify-center">
         <button
-          onClick={() =>
-            router.push(reviewlink)
-          }
+          onClick={() => router.push(reviewlink ?? "")}
           className="px-4 py-2 bg-indigo-600 text-white rounded-md"
         >
-          <RateReview/>&nbsp;&nbsp;Leave a rating
+          <RateReview />
+          &nbsp;&nbsp;Leave a rating
         </button>
       </div>
       <h2 className="text-center text-md font-sans text-zinc-800 poppins-light mx-4 mb-10">

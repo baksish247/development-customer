@@ -29,20 +29,20 @@ export async function getServerSideProps(context) {
 
 const NotFound = ({ data }) => {
   if (!data || !data.name) {
-    data = { name: "Unknown Site" }; // Ensure data is always defined
+    data = { name: "Restaurant Not Found" }; // Ensure data is always defined
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#fff9ea]">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-white">
       <div className="text-center">
-        <h2 className="text-9xl font-bold text-[#440129] animate-bounce">404</h2>
-        <p className="text-2xl text-[#440129] mt-4">
+        <h2 className="text-9xl font-bold text-indigo-500 animate-bounce">404</h2>
+        <p className="text-2xl text-amber-500 mt-4">
           Not Found: {data.name}
         </p>
-        <p className="text-lg text-[#440129] mt-2">
+        <p className="text-lg mt-2">
           Could not find the requested resource.
         </p>
-        <p className="text-lg text-[#440129] mt-2">
+        <p className="text-lg text-indigo-500 mt-2">
           Rescan the QR code and try again.
         </p>
         
