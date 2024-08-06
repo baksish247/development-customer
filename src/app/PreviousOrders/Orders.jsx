@@ -76,29 +76,29 @@ function Orders() {
   }
 
   return (
-    <div className="bg-[#FFF9EA] min-h-screen relative">
+    <div className="bg-white min-h-screen relative">
       <Toaster />
       <Image src={image} alt="topvector" className="absolute top-0 left-0" />
       {/* <Heading heading={"Previously Ordered Items"} /> */}
       <h1 className="text-4xl pt-14 text-center font-semibold text-[#3d3d3d] ">
         {restaurant_name}
       </h1>
-      <div className="mb-6 w-48 text-center mx-auto h-[2px] bg-gradient-to-r from-transparent via-[#a09fa0] to-transparent"></div>
+      <div className="mb-6 w-48 text-center mx-auto h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
       {/* <div className="mb-6 w-48 text-center mx-auto h-[2px] bg-gradient-to-r from-transparent via-[#a09fa0] to-transparent"></div> */}
       <div className="flex relative justify-center items-center mt-4">
         <Link
           href={`/Menu?id=${restaurant_id}&table=${table_number}`}
-          className="bg-[#6C0345] rounded-full py-1 px-4 text-[#FFF9EA] flex justify-center items-center hover:scale-90 duration-700"
+          className="bg-indigo-600 rounded-full py-2 px-4 text-[#FFF9EA] flex justify-center items-center hover:scale-90 duration-700"
         >
           Create a new order
         </Link>
       </div>
       <div className="text-base flex mt-4 px-2 mb-6 justify-center items-center space-x-2 text-[#565556] w-full">
-        <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-transparent to-[#441029]"></div>
-        <p className="lg:text-lg text-[15px] text-[#441029] uppercase tracking-widest">
+        <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-transparent to-indigo-600"></div>
+        <p className="lg:text-lg text-[15px] text-indigo-600 uppercase tracking-widest">
           Previous Orders
         </p>
-        <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-[#441029] to-transparent"></div>
+        <div className="lg:w-40 w-16 h-[2px] bg-gradient-to-r from-indigo-600 to-transparent"></div>
       </div>
       {pastorders?.length > 0 &&
         pastorders.map((order, i) => (
@@ -133,8 +133,8 @@ function Orders() {
         ))}
       {responsefalse && (
         <div className="flex flex-col items-center justify-center mt-32 mb-32">
-        <div className="text-center mx-8">
-          <h1 className="text-4xl font-bold text-[#441029]">
+        <div className="text-center poppins-regular mx-8">
+          <h1 className="text-4xl poppins-bold text-indigo-600">
             Welcome!
           </h1>
           <p className="text-lg mt-4 text-gray-700">
@@ -144,7 +144,7 @@ function Orders() {
             Order and enjoy your first meal!
           </p>
           <div className="mt-10">
-            <p className="text-lg text-[#441029] font-semibold">
+            <p className="text-lg text-zinc-800 font-semibold">
               Redirecting you to home page in{" "}
               <span className="font-bold">{countdown}</span> seconds...
             </p>

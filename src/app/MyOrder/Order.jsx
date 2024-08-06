@@ -274,11 +274,11 @@ function Order() {
             }
             className="mt-10 px-4 py-2 bg-indigo-600 text-white rounded-md"
           >
-            Add more items
+            + Add more items
           </button>
           <button
             onClick={() => setisOpen(true)}
-            className="fixed bottom-3 rounded-full right-4  bg-indigo-600 p-4  text-white z-50"
+            className="fixed bottom-3 rounded-full right-4  bg-amber-500 p-4  text-white z-50"
           >
             <PrintIcon />
           </button>
