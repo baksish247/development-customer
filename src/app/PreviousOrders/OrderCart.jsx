@@ -3,9 +3,10 @@ import icon from '../assets/Rectangle 27.png';
 import Image from 'next/image';
 
 function OrderCart({item}) {
+  console.log(item)
   return (
-    <div className='min-w-[270px] min-h-[100px] p-2 flex justify-start items-center space-x-4 border-[1px] border-[#966729] rounded-lg'>
-      <Image src={icon} width={50} height={70} alt='icon' className='h-14 w-10' />
+    <div className='min-w-[270px] min-h-[100px] p-2 flex justify-start items-center space-x-4 border-[1px] border-amber-600 rounded-lg'>
+      <Image src={item?.food?.image} width={50} height={70} alt='icon' className='h-14 w-10' />
       <div className='lg:text-base w-[200px] text-sm space-y-1 relative'>
         <p className='text-[1rem]'>{item?.food?.name?.slice(0,22)}</p>
         <p className='text-[.8rem]'>Price : ₹{item?.food?.price}</p>
