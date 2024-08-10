@@ -1,20 +1,12 @@
 "use client";
 import Image from "next/image";
-import logo from "../assets/baksish1.png";
-import group from "../assets/Group.svg";
-import chefHat from "../assets/Chef Hat Icon.svg";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import border from "../assets/Group_32.png";
-import chef from "../assets/iconfood.png";
-import heading from "../assets/heading.png";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-  CurrencyRupee,
   EditNote,
   History,
-  ReceiptLong,
 } from "@mui/icons-material";
 import LoadingPage from "../loaders/LoadingPage";
 import GenerateBillModal from "./ConfirmGenerateBill";
@@ -24,6 +16,7 @@ import { clearCart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
 import LandingLoader from "./LandingLoader";
 import chefhat from "../assets/chefhat.png";
+import {MdOutlineEmojiEvents } from 'react-icons/md'
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -103,7 +96,6 @@ const page = () => {
 
   return (
     <div>
-     
       <div className="bg-white h-[90vh] py-10 relative overflow-hidden">
         <Toaster />
         <div
@@ -143,29 +135,40 @@ const page = () => {
               </h1>
             </div>
             <div className="flex justify-center items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-[16px] ">
-              <button
-                disabled={!isterminated}
-                onClick={() =>
-                  (window.location = `/Menu?id=${id}&table=${table_number}&name=${name}`)
-                }
-                className="border-2 text-[18px] text-center poppins-light w-64  border-white z-50 bg-indigo-600 px-4 rounded-md text-[#FFF9EA] py-3"
-              >
-                <EditNote /> Place an Order
-              </button>
-              <button
-                disabled={!isterminated}
-                onClick={() =>
-                  (window.location = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
-                }
-                className="border-2 poppins-light text-center w-64 z-50 border-indigo-600 bg-transparent px-4 rounded-md text-indigo-600 py-3"
-              >
-                <History /> Previous Orders
-              </button>
-             
-             
+            <button
+        disabled={!isterminated}
+        onClick={() =>
+          (window.location.href = `/Menu?id=${id}&table=${table_number}&name=${name}`)
+        }
+        className={`border-2 text-[18px] text-center poppins-light w-64 border-white z-50 bg-indigo-600 px-4 rounded-md py-3 text-[#FFF9EA] transition-transform duration-200 ${
+          !isterminated ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+      >
+        <EditNote className="inline mr-2" /> Place an Order
+      </button>
+
+      <button
+        disabled={!isterminated}
+        onClick={() =>
+          (window.location.href = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
+        }
+        className={`border-2 poppins-light text-center w-64 border-indigo-600 bg-transparent px-4 rounded-md py-3 text-indigo-600 transition-transform duration-200 ${
+          !isterminated ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+      >
+        <History className="inline mr-2" /> Previous Orders
+      </button>
+
+      <button
+        onClick={() =>
+          (window.location.href = `/Events?id=${id}&table=${table_number}&name=${name}`)
+        }
+        className="border-2 bg-orange-500 poppins-light text-center w-64 border-amber-500  px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
+      >
+        <MdOutlineEmojiEvents className="inline mr-2 size-5" /> Events
+      </button>
             </div>
 
-            
             <GenerateBillModal
               buttonclicked={buttonclicked}
               disablebutton={disablebutton}
@@ -180,11 +183,10 @@ const page = () => {
             <NotFound />
           </div>
         )}
-        
       </div>
       <div className=" text-zinc-500 absolute bottom-32 w-full text-center ">
-                powered by BakSISH
-              </div>
+        powered by BakSISH
+      </div>
       <div
         style={{
           position: "absolute",
