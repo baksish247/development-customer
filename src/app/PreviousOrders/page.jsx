@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import Orders from './Orders'
-import Footer from '../Menu/Footer'
+import Footer from '../Tip/Footer'
 import LoadingPage from '../loaders/LoadingPage'
 
 function page() {

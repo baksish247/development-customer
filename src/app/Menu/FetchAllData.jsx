@@ -8,11 +8,11 @@ import SomethingNew from "./SomethingNew";
 import BestSeller from "./BestSeller";
 import DisplayCategorywisemenu from "./DisplayCategorywisemenu";
 import Orderviewer from "./Orderviewer";
-import Footer from "./Footer";
 import LoadingPage from "../loaders/LoadingPage";
 import NotFound from "../not-found";
 import OrderSuccess from "./OrderSuccess";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import Footer from "../Tip/Footer";
 
 
 function FetchAllData() {

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingPage from "../loaders/LoadingPage";
-import Footer from "../Menu/Footer";
+import Footer from "../Tip/Footer";
 import BillHeader from "./BillHeader";
 import Billcomponent from "./Billcomponents";
 import NotFound from "../not-found";

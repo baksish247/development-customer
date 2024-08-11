@@ -4,10 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {
-  EditNote,
-  History,
-} from "@mui/icons-material";
+import { EditNote, History } from "@mui/icons-material";
 import LoadingPage from "../loaders/LoadingPage";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import toast, { Toaster } from "react-hot-toast";
@@ -16,8 +13,7 @@ import { clearCart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
 import LandingLoader from "./LandingLoader";
 import chefhat from "../assets/chefhat.png";
-import { IoTicketOutline } from "react-icons/io5";
-
+import { MdOutlineEmojiEvents } from "react-icons/md";
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -97,7 +93,7 @@ const page = () => {
 
   return (
     <div>
-      <div className="bg-white h-[90vh] py-10 relative overflow-hidden">
+      <div className="bg-white h-[90vh] py-10 pt-20 relative overflow-hidden">
         <Toaster />
         <div
           style={{
@@ -130,9 +126,8 @@ const page = () => {
         {name && name != "notfoundpage" && (
           <div className="w-screen max-h-screen  ">
             <div className="relative max-w-screen overflow-x-hidden flex justify-center flex-col items-center ">
-              <Image src={chefhat} width={150} height={150} alt="chefhat" /> 
-              
-              <h1 className="  mb-28  text-center  poppins-medium uppercase text-black text-2xl ">
+              <Image src={chefhat} width={150} height={150} alt="chefhat" />
+              <h1 className=" tracking-widest mb-16   text-center  poppins-medium uppercase text-black text-2xl ">
                 {name}
               </h1>
             </div>
@@ -142,8 +137,9 @@ const page = () => {
                 onClick={() =>
                   (window.location.href = `/Menu?id=${id}&table=${table_number}&name=${name}`)
                 }
-                className={`border-2 h-20 text-[18px] text-center  poppins-light w-64 border-white z-50 bg-indigo-600 px-4 rounded-md py-3 text-[#FFF9EA] transition-transform duration-200 ${!isterminated ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                className={`border-2 text-[18px] text-center poppins-light w-64 border-white z-50 bg-indigo-600 px-4 rounded-md py-3 text-[#FFF9EA] transition-transform duration-200 ${
+                  !isterminated ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 <EditNote className="inline mr-2" /> Place an Order
               </button>
@@ -151,23 +147,23 @@ const page = () => {
                 onClick={() =>
                   (window.location.href = `/Events?id=${id}&table=${table_number}&name=${name}`)
                 }
-                className="border-2 h-20 bg-orange-500 poppins-light text-center w-64 border-orange-500  px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
+                className=" bg-orange-500 poppins-light text-center w-64   px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
               >
-                <IoTicketOutline className="inline mr-2 size-5" /> Events & Offers
+                <MdOutlineEmojiEvents className="inline mr-2 size-5" /> Events
               </button>
-
               <button
                 disabled={!isterminated}
                 onClick={() =>
                   (window.location.href = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
                 }
-                className={`border-2 h-20 poppins-light text-center w-64 border-indigo-600 bg-transparent px-4 rounded-md py-3 text-indigo-600 transition-transform duration-200 ${!isterminated ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                className={`border-2 poppins-light text-center w-64 border-indigo-600 bg-transparent px-4 rounded-md py-3 text-indigo-600 transition-transform duration-200 ${
+                  !isterminated ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 <History className="inline mr-2" /> Previous Orders
               </button>
 
-
+              
             </div>
 
             <GenerateBillModal
@@ -185,7 +181,7 @@ const page = () => {
           </div>
         )}
       </div>
-      <div className=" text-zinc-500 absolute bottom-32 w-full text-center ">
+      <div className=" text-zinc-500 absolute bottom-20 w-full text-center ">
         powered by BakSISH
       </div>
       <div

@@ -6,7 +6,7 @@ import success from "../assets/success.png";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingPage from "../loaders/LoadingPage";
-import Footer from "../Menu/Footer";
+import Footer from "../Tip/Footer";
 import GenerateBillModal from "./ConfirmGenerateBill";
 import OrderHeader from "./OrderHeader";
 import NotFound from "../not-found";
