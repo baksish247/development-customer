@@ -212,3 +212,12 @@ body{
   left: 0;
   animation: wobble2 var(--uib-speed) infinite ease-in-out;
  }
+
+ /* Hide scrollbar for all browsers */
+.noscroll::-webkit-scrollbar {
+  display: none;
+}
+.noscroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

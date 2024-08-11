@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import PrintIcon from '@mui/icons-material/Print';
 
-function Orderviewer({id,table,order_status,orderid,name}) {
+function  Orderviewer({id,table,order_status,orderid,name}) {
   const router=useRouter();
   const [isOpen, setisOpen] = useState(false);
   const cart = useSelector((state) => state?.cart);

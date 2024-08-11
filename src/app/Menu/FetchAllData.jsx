@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import LoadingPage from "../loaders/LoadingPage";
 import NotFound from "../not-found";
 import OrderSuccess from "./OrderSuccess";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 
 function FetchAllData() {
@@ -20,50 +21,49 @@ function FetchAllData() {
   const [order, setorder] = useState("");
   const [orderstatus, setorderstatus] = useState("null");
   const [openorder, setopenorder] = useState(false);
-  const router=useRouter();
+  const router = useRouter();
   const restaurant_id = searchParams.get("id");
-  const table_number=searchParams.get("table");
-  const orderId= searchParams.get("orderId");
+  const table_number = searchParams.get("table");
+  const orderId = searchParams.get("orderId");
   const [resname, setresname] = useState("")
   const [ordid, setordid] = useState("")
   useEffect(() => {
-    try{
-    
-    const getmenu = async () => {
-      const res = await axios.post("/api/fetchrestaurantmenu", {
-        restaurant_id,
-      });
-      
-      if(orderId!=null){
-        const fetchorder = await axios.post("/api/fetchspecificorder", {
-        orderId: orderId,
-      });
-      setorder(fetchorder.data.data);
-      setopenorder(true);
-     }
-     if(typeof window!=undefined){
-      const oid=localStorage.getItem("orderId");
-      setordid(oid)
-      if(oid!=null){
-      const fetchorder = await axios.post("/api/fetchspecificorder", {
-      orderId: oid,
-      });
-      
-      if(fetchorder.data.success)
-      {setorderstatus(fetchorder.data.data[0].order_status)}
+    try {
+
+      const getmenu = async () => {
+        const res = await axios.post("/api/fetchrestaurantmenu", {
+          restaurant_id,
+        });
+
+        if (orderId != null) {
+          const fetchorder = await axios.post("/api/fetchspecificorder", {
+            orderId: orderId,
+          });
+          setorder(fetchorder.data.data);
+          setopenorder(true);
+        }
+        if (typeof window != undefined) {
+          const oid = localStorage.getItem("orderId");
+          setordid(oid)
+          if (oid != null) {
+            const fetchorder = await axios.post("/api/fetchspecificorder", {
+              orderId: oid,
+            });
+
+            if (fetchorder.data.success) { setorderstatus(fetchorder.data.data[0].order_status) }
+          }
+        }
+        setmenuitems(res.data.data);
+        setresname(res.data.data.restaurant_name)
+      };
+      getmenu();
     }
-     }
-     setmenuitems(res.data.data);
-     setresname(res.data.data.restaurant_name)
-    };
-    getmenu();
-  }
-  catch(e){
-    return(<NotFound/>)
-  }
+    catch (e) {
+      return (<NotFound />)
+    }
   }, []);
 
-  const closeordersuccess=()=>{
+  const closeordersuccess = () => {
     setopenorder(false);
     const newParams = new URLSearchParams(searchParams);
     newParams.set('orderId', null);
@@ -79,16 +79,16 @@ function FetchAllData() {
 
   return (
     <div>
-      
-      {menuitems&&<div className="min-h-screen">
+
+      {menuitems && <div className="bg-gray-100 min-h-screen">
         <Header
           name={menuitems?.restaurant_name}
           restaurant_id={menuitems?.restaurant_id}
           table_number={table_number}
         />
         {/* <What_your_mood /> */}
-        {order && openorder && <OrderSuccess orderDetails={order} onClose={closeordersuccess}/>}
-        <SomethingNew menu={menuitems?.food_items}/>
+        {order && openorder && <OrderSuccess orderDetails={order} onClose={closeordersuccess} />}
+        <SomethingNew menu={menuitems?.food_items} />
         {/* <BestSeller /> */}
         <DisplayCategorywisemenu menu={menuitems?.food_items} />
         <Orderviewer
@@ -98,8 +98,21 @@ function FetchAllData() {
           orderid={ordid}
           name={resname}
         />
-        
+
+        <div className="flex relative justify-center items-center mt-4">
+          <button
+            type="button"
+            onClick={() => { router.push(`/Tip?id=${restaurant_id}&table=${table_number}`) }}
+            className="py-3 px-4 rounded-md text-white mb-6 bg-indigo-600 flex justify-center items-center hover:scale-98 "
+          >
+            Leave us a Review
+
+            <ArrowRightAltIcon />
+          </button>
+        </div>
+
       </div>}
+
       <Footer />
     </div>
   );

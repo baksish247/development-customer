@@ -16,7 +16,8 @@ import { clearCart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
 import LandingLoader from "./LandingLoader";
 import chefhat from "../assets/chefhat.png";
-import {MdOutlineEmojiEvents } from 'react-icons/md'
+import { IoTicketOutline } from "react-icons/io5";
+
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -129,44 +130,44 @@ const page = () => {
         {name && name != "notfoundpage" && (
           <div className="w-screen max-h-screen  ">
             <div className="relative max-w-screen overflow-x-hidden flex justify-center flex-col items-center ">
-              <Image src={chefhat} width={150} height={150} alt="chefhat" />
-              <h1 className=" tracking-widest mb-16   text-center  poppins-medium uppercase text-black text-2xl ">
+              <Image src={chefhat} width={150} height={150} alt="chefhat" /> 
+              
+              <h1 className="  mb-28  text-center  poppins-medium uppercase text-black text-2xl ">
                 {name}
               </h1>
             </div>
             <div className="flex justify-center items-center lg:flex-row  flex-col lg:space-y-0 lg:space-x-4 space-y-[16px] ">
-            <button
-        disabled={!isterminated}
-        onClick={() =>
-          (window.location.href = `/Menu?id=${id}&table=${table_number}&name=${name}`)
-        }
-        className={`border-2 text-[18px] text-center poppins-light w-64 border-white z-50 bg-indigo-600 px-4 rounded-md py-3 text-[#FFF9EA] transition-transform duration-200 ${
-          !isterminated ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
-      >
-        <EditNote className="inline mr-2" /> Place an Order
-      </button>
+              <button
+                disabled={!isterminated}
+                onClick={() =>
+                  (window.location.href = `/Menu?id=${id}&table=${table_number}&name=${name}`)
+                }
+                className={`border-2 h-20 text-[18px] text-center  poppins-light w-64 border-white z-50 bg-indigo-600 px-4 rounded-md py-3 text-[#FFF9EA] transition-transform duration-200 ${!isterminated ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+              >
+                <EditNote className="inline mr-2" /> Place an Order
+              </button>
+              <button
+                onClick={() =>
+                  (window.location.href = `/Events?id=${id}&table=${table_number}&name=${name}`)
+                }
+                className="border-2 h-20 bg-orange-500 poppins-light text-center w-64 border-orange-500  px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
+              >
+                <IoTicketOutline className="inline mr-2 size-5" /> Events & Offers
+              </button>
 
-      <button
-        disabled={!isterminated}
-        onClick={() =>
-          (window.location.href = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
-        }
-        className={`border-2 poppins-light text-center w-64 border-indigo-600 bg-transparent px-4 rounded-md py-3 text-indigo-600 transition-transform duration-200 ${
-          !isterminated ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
-      >
-        <History className="inline mr-2" /> Previous Orders
-      </button>
+              <button
+                disabled={!isterminated}
+                onClick={() =>
+                  (window.location.href = `/PreviousOrders?id=${id}&table=${table_number}&name=${name}`)
+                }
+                className={`border-2 h-20 poppins-light text-center w-64 border-indigo-600 bg-transparent px-4 rounded-md py-3 text-indigo-600 transition-transform duration-200 ${!isterminated ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+              >
+                <History className="inline mr-2" /> Previous Orders
+              </button>
 
-      <button
-        onClick={() =>
-          (window.location.href = `/Events?id=${id}&table=${table_number}&name=${name}`)
-        }
-        className="border-2 bg-orange-500 poppins-light text-center w-64 border-amber-500  px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
-      >
-        <MdOutlineEmojiEvents className="inline mr-2 size-5" /> Events
-      </button>
+
             </div>
 
             <GenerateBillModal

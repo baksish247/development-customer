@@ -65,25 +65,10 @@ function Header({name,restaurant_id,table_number}) {
         </div>
       </div>
       <div className="mt-5 h-8 relative">
-        {/* <Image
-          src={goldbg}
-          alt="bggolds"
-          className="object-cover absolute focus:border-none left-0 top-0 -z-10 h-4 w-screen object-center"
-        /> */}
+        
         <p className="text-center poppins-regular p-1 text-[#222] text-[12px] width-full bg-[#FFC011]">
          Now you can review and rate our service !
         </p>
-      </div>
-      <div className="flex relative justify-center items-center mt-4">
-        <button
-        type="button"
-          onClick={()=>{router.push(`/Tip?id=${restaurant_id}&table=${table_number}`)}}
-          className="py-1 px-4 rounded-full text-white bg-indigo-600 flex justify-center items-center hover:scale-90 "
-        >
-          Treat the team
-          
-          <ArrowRightAltIcon />
-        </button>
       </div>
     </div>
   );
