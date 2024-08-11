@@ -46,6 +46,18 @@ const completedOrders = new mongoose.Schema({
     total_bill: {
         type: String,
     },
+    order_status:{
+        type: String,
+    },
+    time_taken_total:{
+        type:String,
+    },
+    customer_phone:{
+        type: String,
+    },
+    payment_method:{
+        type:Object
+    }
 }, { timestamps: true })
 
 export default mongoose.models.CompletedOrders || mongoose.model("CompletedOrders", completedOrders)
