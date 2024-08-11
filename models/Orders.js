@@ -43,6 +43,9 @@ const orders = new mongoose.Schema({
     served_at:{
         type:Date
     },
+    time_taken_total:{
+        type:String,
+    },
     estimated_time_to_serve:{
         type:String
     }
