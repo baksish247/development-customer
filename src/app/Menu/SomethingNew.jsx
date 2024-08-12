@@ -1,76 +1,99 @@
-// "use client";
-// import React from "react";
-// import SmallViewItem from "./SmallViewItem";
-// import Heading from "./Heading";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
-// function SomethingNew({ menu }) {
-//   // Sort menu items by createdAt timestamp in descending order (latest first)
-//   const sortedMenu = menu.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-//   // Limit the number of items to 5
-//   const limitedMenu = sortedMenu.slice(0, 5);
-
-//   return (
-//     <>
-//       <Heading heading={"Chef's Special"} />
-//       <div className="px-4 -mt-0">
-//         <section className="flex  noscroll overflow-x-auto space-x-4 p-4">
-//           {limitedMenu.map((item) => (
-//             <SmallViewItem item={item} key={item._id} />
-//           ))}
-//         </section>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default SomethingNew;
 "use client";
-import React, { useEffect, useRef } from "react";
-import SmallViewItem from "./SmallViewItem";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Heading from "./Heading";
 
 function SomethingNew({ menu }) {
   // Sort menu items by createdAt timestamp in descending order (latest first)
-  const sortedMenu = menu.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const sortedMenu = menu.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   // Limit the number of items to 5
-  const limitedMenu = sortedMenu.slice(0, 5);
+  const limitedMenu = sortedMenu.slice(0, 10);
 
-  // Reference to the scroll container
-  const scrollRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    let scrollAmount = 0;
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % limitedMenu.length);
+    }, 3000); // Change image every 3 seconds
 
-    const autoScroll = () => {
-      scrollAmount += 1; // Smaller increment for slower scroll
-      if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
-        scrollAmount = 0; // Reset scroll when reaching the end
-      }
-      scrollContainer.scrollTo({
-        left: scrollAmount,
-        behavior: "auto",
+    return () => clearInterval(interval);
+  }, [limitedMenu.length]);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      const scrollPosition =
+        (carousel.scrollWidth / limitedMenu.length) * currentIndex;
+      carousel.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth", // Smooth scroll transition
       });
-    };
-
-    const scrollInterval = setInterval(autoScroll, 30); // Slower scroll speed
-
-    return () => clearInterval(scrollInterval); // Cleanup on unmount
-  }, []);
+    }
+  }, [currentIndex, limitedMenu.length]);
 
   return (
     <>
       <Heading heading={"Chef's Special"} />
-      <div className="px-4 -mt-0">
-        <section ref={scrollRef} className="flex noscroll overflow-x-auto space-x-4 ">
-          {limitedMenu.map((item) => (
-            <SmallViewItem item={item} key={item._id} />
-          ))}
-        </section>
+      <div className="relative px-4 mt-0 overflow-hidden">
+        <div
+          ref={carouselRef}
+          className="flex overflow-x-auto noscroll  space-x-2 lg:space-x-4"
+          style={{ scrollBehavior: "smooth" }} // Enable smooth scrolling
+        >
+          {limitedMenu.map((item, index) => {
+            const isFirst = index === 0;
+            const isLast = index === limitedMenu.length - 1;
+            const widthClass =
+              isFirst || isLast
+                ? "w-[calc(100%_-_3rem)]"
+                : "w-[calc(100%_-_6rem)]";
+
+            return (
+              <div
+                key={item._id}
+                className={` ${widthClass} lg:w-[calc(100%_/3)] h-[300px] relative`}
+                style={{ minWidth: "calc(100% - 6rem)" }}
+              >
+                <Image
+                  src={item.image} // Assuming 'image' is the field for the image path
+                  alt={item.name}
+                  height={100}
+                  width={100}
+                  className="w-full h-full object-cover" // Adjusted to maintain aspect ratio
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 rounded-md flex flex-col justify-end p-4">
+                  <div className="flex justify-between items-center w-full text-white">
+                    <h2 className="text-lg font-bold">{item.name}</h2>
+                    <span>{item.type === "veg" ? "🥦" : "🍗"}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {/* Navigation buttons */}
+        <button
+          className="absolute left-1 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+          onClick={() =>
+            setCurrentIndex(
+              (currentIndex - 1 + limitedMenu.length) % limitedMenu.length
+            )
+          }
+        >
+          &lt;
+        </button>
+        <button
+          className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+          onClick={() =>
+            setCurrentIndex((currentIndex + 1) % limitedMenu.length)
+          }
+        >
+          &gt;
+        </button>
       </div>
     </>
   );
