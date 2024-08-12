@@ -11,21 +11,35 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
       - name: Create .env file
-        run: echo "MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}" >> .env && echo "SITE_URL=${{ secrets.SITE_URL }}" >> .env 
+        run: |
+          echo "MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}" >> .env
+          echo "MONGODB_URI=mongodb+srv://nandibibaswan19:${{ secrets.MONGO_PASSWORD }}@cluster0.rlr4xvv.mongodb.net/trial?retryWrites=true&w=majority&appName=Cluster0" >> .env
+          echo "RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}" >> .env
+          echo "RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}" >> .env
+          echo "NEXT_PUBLIC_RAZORPAY_KEY_ID=${{ secrets.NEXT_PUBLIC_RAZORPAY_KEY_ID }}" >> .env
+          echo "NEXT_PUBLIC_QR_URL=${{ secrets.NEXT_PUBLIC_QR_URL }}" >> .env
+          echo "SITE_URL=${{ secrets.SITE_URL }}" >> .env
+
       - name: Build Docker image
         run: docker build -t baksish/customer .
+
       - name: Login to DockerHub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Push Docker image to Docker Hub
         run: docker push baksish/customer:latest
+
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull Docker image from Docker Hub
         run: docker pull baksish/customer:latest
-      - name: Delete Old Docker Image
+
+      - name: Delete Old Docker Container
         run: docker rm -f customer
+
       - name: Run Docker Container
-        run: docker run -d -p 3000:3000 --name customer baksish/customer
+        run: docker run -d -p 3000:3000 --env-file .env --name customer baksish/customer
