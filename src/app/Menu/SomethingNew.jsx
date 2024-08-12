@@ -10,7 +10,7 @@ function SomethingNew({ menu }) {
   );
 
   // Limit the number of items to 5
-  const limitedMenu = sortedMenu.slice(0, 10);
+  const limitedMenu = sortedMenu.slice(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
@@ -55,7 +55,7 @@ function SomethingNew({ menu }) {
             return (
               <div
                 key={item._id}
-                className={` ${widthClass} lg:w-[calc(100%_/3)] h-[300px] relative`}
+                className={` ${widthClass} lg:w-[calc(100%_/4)] h-[300px] relative`}
                 style={{ minWidth: "calc(100% - 6rem)" }}
               >
                 <Image
