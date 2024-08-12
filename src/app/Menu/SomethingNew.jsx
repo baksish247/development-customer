@@ -4,13 +4,15 @@ import Image from "next/image";
 import Heading from "./Heading";
 
 function SomethingNew({ menu }) {
+  //console.log(menu);
+  
   // Sort menu items by createdAt timestamp in descending order (latest first)
   const sortedMenu = menu.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
   // Limit the number of items to 5
-  const limitedMenu = sortedMenu.slice(0);
+  const limitedMenu = sortedMenu.slice(0, 5);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
@@ -41,59 +43,41 @@ function SomethingNew({ menu }) {
       <div className="relative px-4 mt-0 overflow-hidden">
         <div
           ref={carouselRef}
-          className="flex overflow-x-auto noscroll  space-x-2 lg:space-x-4"
+          className="flex overflow-x-auto noscroll space-x-2 lg:space-x-4"
           style={{ scrollBehavior: "smooth" }} // Enable smooth scrolling
         >
-          {limitedMenu.map((item, index) => {
-            const isFirst = index === 0;
-            const isLast = index === limitedMenu.length - 1;
-            const widthClass =
-              isFirst || isLast
-                ? "w-[calc(100%_-_3rem)]"
-                : "w-[calc(100%_-_6rem)]";
-
-            return (
-              <div
-                key={item._id}
-                className={` ${widthClass} lg:w-[calc(100%_/4)] h-[300px] relative`}
-                style={{ minWidth: "calc(100% - 6rem)" }}
-              >
-                <Image
-                  src={item.image} // Assuming 'image' is the field for the image path
-                  alt={item.name}
-                  height={100}
-                  width={100}
-                  className="w-full h-full object-cover" // Adjusted to maintain aspect ratio
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-40 rounded-md flex flex-col justify-end p-4">
-                  <div className="flex justify-between items-center w-full text-white">
-                    <h2 className="text-lg font-bold">{item.name}</h2>
-                    <span>{item.type === "veg" ? "🥦" : "🍗"}</span>
-                  </div>
+          {limitedMenu.map((item) => (
+            <div
+              key={item._id}
+              className="flex-shrink-0 w-[calc(100%_-_6rem)] lg:w-[calc(25%_-_2rem)] h-[250px] relative"
+              style={{ minWidth: "calc(100% - 6rem)" }}
+            >
+              <Image
+                src={item.image} // Assuming 'image' is the field for the image path
+                alt={item.name}
+                layout="fill"
+                objectFit="cover"
+                className="w-full h-full" // Ensure the image covers the container
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-40 rounded-md flex flex-col justify-end p-4">
+                <div className="flex justify-between items-center w-full text-white">
+                  <h2 className="text-lg font-bold">{item.name}</h2>
+                  <Image
+                    src={`${
+                      item.subcategory === "Veg"
+                        ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAIwdpGyHat_Ca7H8KRaa2zx4ZJNlz4y0aCQ&s"
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjiz6WIVSYKbILJ-x6kygxSFHXo3aXfY7azw&s"
+                    }`}
+                    alt={item.type}
+                    width={24}
+                    height={24}
+                    className="ml-2"
+                  />
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
-        {/* Navigation buttons */}
-        <button
-          className="absolute left-1 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
-          onClick={() =>
-            setCurrentIndex(
-              (currentIndex - 1 + limitedMenu.length) % limitedMenu.length
-            )
-          }
-        >
-          &lt;
-        </button>
-        <button
-          className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
-          onClick={() =>
-            setCurrentIndex((currentIndex + 1) % limitedMenu.length)
-          }
-        >
-          &gt;
-        </button>
       </div>
     </>
   );

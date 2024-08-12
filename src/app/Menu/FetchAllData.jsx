@@ -103,9 +103,9 @@ function FetchAllData() {
           <button
             type="button"
             onClick={() => { router.push(`/Tip?id=${restaurant_id}&table=${table_number}`) }}
-            className="py-3 px-4 rounded-md text-white mb-6 bg-indigo-600 flex justify-center items-center hover:scale-98 "
+            className="py-3 px-4 inline-flex rounded-md text-white mb-6 bg-indigo-600  justify-center items-center hover:scale-98 "
           >
-            Leave us a Review
+            <span>Rate & Treat</span>
 
             <ArrowRightAltIcon />
           </button>

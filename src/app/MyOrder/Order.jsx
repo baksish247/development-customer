@@ -181,7 +181,7 @@ function Order() {
   }
 
   return (
-    <>
+    <div className="min-h-screen">
       <OrderHeader
         name={restaurant_name}
         id={restaurant_id}
@@ -310,10 +310,10 @@ function Order() {
         onClose={() => setisOpen(false)}
         onConfirm={billgenerationconfirmed}
       />
-      <div className="bottom-0">
+      <div className="absolute w-screen bottom-0">
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
 

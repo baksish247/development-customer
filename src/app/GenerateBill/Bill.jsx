@@ -183,16 +183,16 @@ function Bill() {
           </div>
         )}
         <button
-          // onClick={() =>
-          //   router.push(`/Menu?id=${restaurant_id}&table=${table_number}`)
-          // }
+          onClick={() =>
+            router.push(`https://search.google.com/local/writereview?placeid=ChIJjcBHDewJGToRzT5tkVPJmPk`)
+          }
           className="mt-10 px-4 py-2 bg-indigo-600 text-white text-lg rounded-md"
         >
           <RateReview/>&nbsp;&nbsp;Leave a review
         </button>
         
       </div>
-      <div className="bottom-0">
+      <div className="">
         <Footer />
       </div>
     </>
