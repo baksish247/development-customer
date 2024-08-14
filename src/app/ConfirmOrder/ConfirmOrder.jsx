@@ -12,10 +12,12 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingPage from "../loaders/LoadingPage";
 import NotFound from "../not-found";
+import ConfirmModle from "./ConfirmModle";
 
 function ConfirmOrder() {
   const searchParams = useSearchParams();
   const cart = useSelector((state) => state?.cart);
+  const [openconfirmmodle, setopenconfirmmodle] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const [notes, setnotes] = useState("");
   const [isbuttonloading, setisbuttonloading] = useState(false);
@@ -45,8 +47,8 @@ function ConfirmOrder() {
       } else {
         return null;
       }
-    } catch(e){
-      return (<NotFound/>)
+    } catch (e) {
+      return <NotFound />;
     }
   };
 
@@ -102,15 +104,26 @@ function ConfirmOrder() {
 
       initialize();
     } catch (e) {
-      return (<NotFound/>);
+      return <NotFound />;
     }
   }, []);
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
-
-  const handleplaceorder = async () => {
+  const ConfirmOrderplace = () => {
+    if (localStorage.getItem("orderId") === null) {
+      setopenconfirmmodle(true);
+      setisbuttonloading(true);
+    } else {
+      handleplaceorder("", "");
+    }
+  };
+  const handleclose = () => {
+    setopenconfirmmodle(true);
+    setisbuttonloading(false);
+  };
+  const handleplaceorder = async (name, phone) => {
     try {
       if (parseFloat(cart.totalPrice) > 0 || cart.totalQuantity > 0) {
         if (savedrestaurantid != restaurant_id) {
@@ -163,12 +176,13 @@ function ConfirmOrder() {
               total_bill: (
                 parseFloat(cart.totalPrice) + parseFloat(nettax)
               ).toFixed(2),
+              customer_name: name,
+              customer_phone: phone,
             };
 
             const res = await axios.post("api/createneworder", orderDetails);
 
             if (res.data.success) {
-              
               dispatch(clearCart());
               router.push(
                 `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
@@ -207,7 +221,6 @@ function ConfirmOrder() {
           const res = await axios.post("api/updateexistingorder", orderDetails);
 
           if (res.data.success) {
-            
             dispatch(clearCart());
             router.push(
               `/Menu?id=${restaurant_id}&table=${table_number}&orderId=${orderId}`
@@ -222,7 +235,7 @@ function ConfirmOrder() {
         setisbuttonloading(false);
       }
     } catch (err) {
-      return (<NotFound/>);
+      return <NotFound />;
     }
   };
 
@@ -236,6 +249,13 @@ function ConfirmOrder() {
 
   return (
     <div>
+      {openconfirmmodle && (
+        <ConfirmModle
+          cart={cart}
+          handleplaceorder={handleplaceorder}
+          handleclose={handleclose}
+        />
+      )}
       <Toaster />
       <header>
         <div className="h-16 bg-indigo-600 flex justify-between px-4 items-center">
@@ -291,9 +311,9 @@ function ConfirmOrder() {
             <div className="flex justify-between mb-2">
               <span className="poppins-semibold text-gray-700">
                 Taxes{" "}
-                <sup className="rounded-full text-[#6C0345] ">
-                  <InfoOutlinedIcon className="h-[1px] w-[1px]" />
-                </sup>
+                {/* <sup className="rounded-full text-[#6C0345] ">
+                  <InfoOutlinedIcon className="h-[1px] w-[1px] -z-30" />
+                </sup> */}
               </span>
               <span className="text-gray-700">
                 ₹ {parseFloat(cart?.totalPrice * tax)?.toFixed(2)}
@@ -301,7 +321,9 @@ function ConfirmOrder() {
             </div>
             <div className="border-t border-gray-300 my-2"></div>
             <div className="flex justify-between mt-2">
-              <span className="poppins-bold text-lg text-gray-700">Grand Total</span>
+              <span className="poppins-bold text-lg text-gray-700">
+                Grand Total
+              </span>
               <span className="poppins-bold text-gray-700">
                 ₹{" "}
                 {(
@@ -316,8 +338,7 @@ function ConfirmOrder() {
       <footer className="h-[100px] fixed bottom-0 w-full bg-indigo-600 p-4 text-white flex justify-center items-center">
         <button
           onClick={() => {
-            setisbuttonloading(true);
-            handleplaceorder();
+            ConfirmOrderplace();
           }}
           disabled={isbuttonloading || !isInitialized} // Disable button if not initialized
           className="bg-white border-2 px-4 py-2 w-full rounded-lg text-indigo-600 tracking-[0.5rem] font-extrabold relative"

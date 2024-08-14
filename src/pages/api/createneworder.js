@@ -18,6 +18,8 @@ const handler = async (req, res) => {
         initial_bill,
         tax,
         total_bill,
+        customer_name,
+        customer_phone
       } = req.body;
       const order_status = "new";
 
@@ -93,6 +95,8 @@ const handler = async (req, res) => {
         tax,
         total_bill,
         order_status,
+        customer_name,
+        customer_phone,
       });
 
       const savedOrder = await newOrder.save();
