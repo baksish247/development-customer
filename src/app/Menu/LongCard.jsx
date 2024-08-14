@@ -35,7 +35,7 @@ function LongCard({ item }) {
   return (
     <div className="flex bg-white -z-40 items-center space-x-12 p-2 mb-2 rounded-lg space-y-2">
       <div className="flex-grow w-2/5">
-        <h2 className="text-lg poppins-semibold text-[#2f2f2f]">{item?.name}</h2>
+        <h2 className="text-lg poppins-semibold capitalize text-[#2f2f2f]">{item?.name}</h2>
         <p>₹ {item?.price}</p>
         <p className="text-[10px] poppins-light text-start text-[#565556]">{item.description}</p>
       </div>

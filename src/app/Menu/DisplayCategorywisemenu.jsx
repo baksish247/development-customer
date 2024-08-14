@@ -35,7 +35,7 @@ function DisplayCategorywisemenu({menu}) {
             if (subcategoryItems.length === 0) return null;
 
             return (
-              <div key={`${category}-${subcategory} `} className='border-b-2 border-dotted  border-[#966729]'>
+              <div key={`${category}-${subcategory} `} className='border-b-2 border-dotted mb-3 border-[#966729]'>
                 <h3 className="text-lg font-semibold mb-2 flex items-center">
                   {subcategory === 'Veg' ? <Image src={vegicon} alt="vegicon" className="h-8 w-8"/> : <Image src={nonvegicon} alt="nonvegicon" className="h-6 w-6 mr-1"/>}
                   {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}

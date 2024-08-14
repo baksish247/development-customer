@@ -46,6 +46,9 @@ const orders = new mongoose.Schema({
     estimated_time_to_serve:{
         type:String
     },
+    customer_name:{
+        type:String
+    },
     customer_phone:{
         type: String,
     }
