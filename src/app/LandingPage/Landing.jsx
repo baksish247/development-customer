@@ -149,7 +149,7 @@ const page = () => {
                 }
                 className=" bg-orange-500 poppins-light text-center w-64   px-4 rounded-md py-3 text-white flex justify-center items-center space-x-2 transition-transform duration-200"
               >
-                <MdOutlineEmojiEvents className="inline mr-2 size-5" /> Events
+                <MdOutlineEmojiEvents className="inline mr-2 size-5" /> Offers & Events
               </button>
               <button
                 disabled={!isterminated}

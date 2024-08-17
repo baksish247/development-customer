@@ -120,7 +120,7 @@ function ConfirmOrder() {
     }
   };
   const handleclose = () => {
-    setopenconfirmmodle(true);
+    setopenconfirmmodle(false);
     setisbuttonloading(false);
   };
   const handleplaceorder = async (name, phone) => {

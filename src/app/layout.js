@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./Menu/Header";
 import CartProvider from "./redux/CartProvider";
+import Button from "./OffersButton/button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
   return (
     <CartProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          {/* <Button/> */}
+          {children}</body>
       </html>
     </CartProvider>
   );

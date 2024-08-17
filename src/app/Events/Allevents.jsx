@@ -8,8 +8,10 @@ import Footer from "../Tip/Footer";
 import axios from "axios"; // Import axios for API calls
 
 function Allevents() {
-  const [showAllEvents, setShowAllEvents] = useState(false);
+  const [showAllEvents, setShowAllEvents] = useState(true); // State to control whether to show all events or only the filtered ones
+
   const [events, setEvents] = useState([]);
+  const [offers, setoffers] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // State to hold the search query
   const searchParams = useSearchParams(); // Get search params
   const router = useRouter(); // Get router instance
@@ -37,9 +39,25 @@ function Allevents() {
         console.error("Error fetching events:", error);
       }
     };
+    const fetchoffers = async () => {
+      const { data } = await axios.post("/api/fetchoffersbyid", {
+        restaurant_id: restaurantId,
+      });
+      console.log(data?.data);
+      setoffers(data.data);
+    };
+    if (showAllEvents) {
+      fetchEvents();
+    } else {
+      fetchoffers();
+    }
+  }, [restaurantId, showAllEvents]); // Fetch events when restaurantId changes
 
-    fetchEvents();
-  }, [restaurantId]); // Fetch events when restaurantId changes
+  //change events to offer and vice versa
+  const switchToSection = (sec) => {
+    if (sec === "events") setShowAllEvents(true);
+    else setShowAllEvents(false);
+  };
 
   // Filter events based on the search query
   const filteredEvents = events.filter((event) =>
@@ -97,7 +115,7 @@ function Allevents() {
         </div>
 
         {/* Event Browsing Card */}
-        <div className="p-4 m-4 bg-blue-100 rounded-lg flex items-center justify-between">
+        {/* <div className="p-4 m-4 bg-blue-100 rounded-lg flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold capitalize text-blue-600">
               Know what's happening!
@@ -111,48 +129,127 @@ function Allevents() {
             alt="Restaurant Event"
             className="w-20 h-20 object-cover rounded-md"
           />
+        </div> */}
+        <div className="flex justify-start items-center m-4">
+          <button
+            className={`${
+              showAllEvents
+                ? "bg-indigo-600 text-white"
+                : "bg-white text-indigo-600 hover:text-white border-10"
+            }  px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-100 hover:text-white focus:outlin e-none mr-2`}
+            onClick={() => switchToSection("events")}
+          >
+            Events
+          </button>
+          <button
+            className={`${
+              !showAllEvents
+                ? "bg-indigo-600 text-white"
+                : "bg-white text-indigo-600 hover:text-white border-10"
+            }  px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-100  hover:text-white focus:outlin e-none mr-2`}
+            onClick={() => switchToSection("offers")}
+          >
+            Offers
+          </button>
         </div>
 
         {/* Popular Events Section */}
-        <div className="p-4 mb-8">
-          <h2 className="text-lg font-semibold mb-4">Popular Events</h2>
-          <div className={``}>
-            {visibleEvents.length > 0 ? (
-              <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
-                {" "}
-                {visibleEvents.map((event) => (
-                  <div
-                    key={event._id}
-                    className="bg-white rounded-lg shadow-sm cursor-pointer"
-                    onClick={() => handleEventClick(event._id)} // Call the function on click
-                  >
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      loading="lazy" // Lazy loading images
-                      className="w-full h-52 object-cover rounded-t-lg"
-                    />
-                    <div className="p-2">
-                      <h3 className="text-sm mb-1 font-semibold truncate">
-                        {event.title}
-                      </h3>
-                      <p className="text-xs text-gray-500">
-                        {event.date} | {event.time}
-                      </p>
-                      <p className="text-xs text-gray-500">{event.location}</p>
+        {showAllEvents ? (
+          <div className="p-4 pt-0 mb-8">
+            <h2 className="text-lg font-semibold mb-4">Popular Events</h2>
+            <div className={``}>
+              {visibleEvents.length > 0 ? (
+                <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
+                  {" "}
+                  {visibleEvents.map((event) => (
+                    <div
+                      key={event._id}
+                      className="bg-white rounded-lg shadow-sm cursor-pointer"
+                      onClick={() => handleEventClick(event._id)} // Call the function on click
+                    >
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        loading="lazy" // Lazy loading images
+                        className="w-full h-52 object-cover rounded-t-lg"
+                      />
+                      <div className="p-2">
+                        <h3 className="text-sm mb-1 font-semibold truncate">
+                          {event.title}
+                        </h3>
+                        <p className="text-xs text-gray-500">
+                          {event.date} | {event.time}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {event.location}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="w-full text-center mt-10">
-                No Events are Happening Now
-                <br />
-                keep in touch!
-              </p>
-            )}
+                  ))}
+                </div>
+              ) : (
+                <p className="w-full text-center mt-10">
+                  No Events are Happening Now
+                  <br />
+                  keep in touch!
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-4 pt-0 mb-8">
+            <h2 className="text-lg font-semibold mb-4">Latest Offers</h2>
+            <div>
+              {offers.length > 0 ? (
+                <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
+                  {offers.map((offer) => (
+                    <div
+                      key={offer._id}
+                      className="bg-white rounded-lg shadow-sm cursor-pointer"
+                      // onClick={() => handleOfferClick(offer._id)}
+                    >
+                      <img
+                        src={offer.image}
+                        alt={offer.itemname}
+                        loading="lazy"
+                        className="w-full h-52 object-cover rounded-t-lg"
+                      />
+                      <div className="p-2">
+                        <h3 className="text-sm mb-1 font-semibold truncate">
+                          {offer.itemname}
+                        </h3>
+                        <p className="text-xs text-gray-500 truncate">
+                          {offer.itemDescription}
+                        </p>
+                        <div className="flex justify-between items-center mt-2">
+                          <p className="text-sm font-semibold text-green-600">
+                            ₹{offer.newPrice}
+                          </p>
+                          {offer.oldPrice && (
+                            <p className="text-xs text-gray-500 line-through">
+                              ₹{offer.oldPrice}
+                            </p>
+                          )}
+                        </div>
+                        {offer.discount && (
+                          <p className="text-xs text-red-500 mt-1">
+                            {offer.discount}% off
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="w-full text-center mt-10">
+                  No Offers Available Right Now
+                  <br />
+                  Check Back Later!
+                </p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </>

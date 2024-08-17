@@ -78,7 +78,7 @@ function SearchPage() {
       <div className="h-[180px] mb-6 relative w-screen  bg-white">
         
         <div className="flex justify-start space-x-2 items-center p-6">
-        <span><IoMdArrowBack className="size-6 cursor-pointer" onClick={()=>router.push('/Menu?id=RES_45966cf2-ea3a-4dee-a982-c00075a3a61f&name=Angshupriya&table=2')}/></span>  <span className=" text-2xl border-b-2 border-indigo-600">{name}</span>
+        <span><IoMdArrowBack className="size-6 cursor-pointer" onClick={()=>router.push(`/Menu?id=${restaurant_id}&name=${name}&table=${table_number}`)}/></span>  <span className=" text-2xl border-b-2 border-indigo-600">{name}</span>
         </div>
         <h2 className="text-center mb-2 font-semibold  text-zinc-600">
           Search your food

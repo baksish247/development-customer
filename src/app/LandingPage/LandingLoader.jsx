@@ -10,6 +10,7 @@ function page() {
         className="mix-blend-multiply lg:w-[50%]"
         src={loadingimg}
         alt="none"
+        unoptimized
         priority
         width={1000}
         height={1000}

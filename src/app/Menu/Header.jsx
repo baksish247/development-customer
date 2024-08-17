@@ -64,7 +64,7 @@ function Header({name,restaurant_id,table_number}) {
         <span className="absolute top-[0.8rem] left-24 text-gray-600">Search for Your Favourites</span>
         </div>
       </div>
-      <div className="mt-6 h-8 relative">
+      <div className="mt-4 h-6 relative">
         
         <p className="text-center poppins-regular p-1 text-[#222] text-[12px] width-full bg-[#FFC011]">
          Now you can review and rate our service !
